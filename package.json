@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "notempo",
   "module": "index.ts",
   "type": "module",
@@ -10,8 +11,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "devDependencies": {
     "@types/bun": "latest",
