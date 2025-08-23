@@ -2,18 +2,25 @@
   "name": "@repo/server",
   "version": "0.0.1",
   "scripts": {
-    "dev": "bun --watch src/index.ts",
-    "build": "bun build src/index.ts --outdir dist",
-    "start": "bun dist/index.js",
+    "build": "bun build --target bun --outfile dist/server.js ./src/web/server.ts",
+    "dev": "bun run --watch src/web/server.ts",
+    "start": "node dist/server.js",
     "lint": "eslint src/**/*.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "@neondatabase/serverless": "^1.0.1",
+    "dotenv": "^17.2.1",
+    "drizzle-orm": "^0.44.4",
+    "elysia": "latest",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.10.0"
   },
   "devDependencies": {
-    "bun-types": "latest",
     "@types/node": "latest",
+    "bun-types": "latest",
+    "drizzle-kit": "^0.31.4",
     "eslint": "latest",
-    "eslint-config": "workspace:*"
+    "eslint-config": "workspace:*",
+    "tsx": "^4.20.4"
   }
 }

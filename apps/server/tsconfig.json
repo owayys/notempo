@@ -3,7 +3,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@domain/*": ["./src/domain/*"]
+      "@domain/*": ["./src/domain/*"],
+      "@infra/*": ["./src/infra/*"],
+      "@application/*": ["./src/application/*"],
+      "@web/*": ["./src/web/*"],
+      "@shared/*": ["./src/shared/*"]
     }
   },
   "include": ["src", "test", "./*.ts"],
