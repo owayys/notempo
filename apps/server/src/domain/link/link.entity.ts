@@ -1,38 +1,28 @@
-import type {
-  ConceptEntity,
-  ConceptType,
-} from "@domain/concept/concept.entity";
-import type { NoteType } from "@domain/note/note.entity";
-import { BaseEntity } from "@domain/utils/base.entity";
-import type { EntityCreateData, EntityType } from "@domain/utils/refined.type";
+import { BaseEntity } from "@domain/utils";
+import { LinkSchema, type LinkCreateData, type LinkType } from "@domain/link";
+import type { ConceptType } from "@domain/concept";
+import type { NoteType } from "@domain/note";
+import { Result as R } from "@carbonteq/fp";
 
-export type LinkType = EntityType<
-  "Link",
-  {
-    conceptId: ConceptType["id"];
-    noteId: NoteType["id"];
-    alias: string | undefined;
-  }
->;
-
-export type LinkCreateData = EntityCreateData<LinkType>;
-
-export class LinkEntity extends BaseEntity<"Link"> implements LinkType {
+export class LinkEntity extends BaseEntity implements LinkType {
+  override id: LinkType["id"];
   conceptId: ConceptType["id"];
   noteId: NoteType["id"];
   alias: string | undefined;
 
   private constructor(data: LinkType) {
     super(data);
-    (this.conceptId = data.conceptId), (this.noteId = data.noteId);
+    this.id = data.id;
+    this.conceptId = data.conceptId;
+    this.noteId = data.noteId;
   }
 
   static create(data: LinkCreateData) {
     const linkData = {
-      ...LinkEntity.init(),
+      ...LinkSchema.baseInit(),
       ...data,
     } as LinkType;
 
-    return new LinkEntity(linkData);
+    return R.Ok(new LinkEntity(linkData));
   }
 }

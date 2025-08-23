@@ -1,32 +1,27 @@
 import { BaseEntity } from "@domain/utils/base.entity";
-import type { EntityCreateData, EntityType } from "@domain/utils/refined.type";
+import {
+  ConceptCreateData,
+  ConceptSchema,
+  type ConceptType,
+} from "@domain/concept";
+import { Result as R } from "@carbonteq/fp";
 
-export type ConceptType = EntityType<
-  "Concept",
-  {
-    label: string;
-  }
->;
-
-export type ConceptCreateData = EntityCreateData<ConceptType>;
-
-export class ConceptEntity
-  extends BaseEntity<"Concept">
-  implements ConceptType
-{
+export class ConceptEntity extends BaseEntity implements ConceptType {
+  override id: ConceptType["id"];
   label: string;
 
   private constructor(data: ConceptType) {
     super(data);
+    this.id = data.id;
     this.label = data.label;
   }
 
   static create(data: ConceptCreateData) {
     const conceptData = {
-      ...ConceptEntity.init(),
+      ...ConceptSchema.baseInit(),
       ...data,
     } as ConceptType;
 
-    return new ConceptEntity(conceptData);
+    return R.Ok(new ConceptEntity(conceptData));
   }
 }

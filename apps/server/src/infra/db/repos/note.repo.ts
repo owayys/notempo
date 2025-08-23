@@ -1,4 +1,12 @@
-import { NoteRepository, type NoteEntity, type NoteType } from "@domain/note";
+import { NoteEntity, NoteRepository, type NoteType } from "@domain/note";
+import { enhanceEntityMapper } from "../utils/repo.utils";
+import type { notes } from "@infra/db/models";
+
+const mapper = enhanceEntityMapper((row: typeof notes.$inferSelect) =>
+  NoteEntity.create({
+    text: row.text,
+  })
+);
 
 export class DrizzleNoteRepository extends NoteRepository {
   override create(note: NoteEntity): Promise<NoteEntity> {

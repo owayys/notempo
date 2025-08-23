@@ -1,30 +1,24 @@
-import type { EntityCreateData, EntityType } from "@domain/utils/refined.type";
-import { BaseEntity } from "@domain/utils/base.entity";
+import { BaseEntity } from "@domain/utils";
+import { Result as R } from "@carbonteq/fp";
+import { NoteSchema, type NoteCreateData, type NoteType } from "@domain/note";
 
-export type NoteType = EntityType<
-  "Note",
-  {
-    text: string;
-  }
->;
-
-export type NoteCreateData = EntityCreateData<NoteType>;
-
-export class NoteEntity extends BaseEntity<"Note"> implements NoteType {
+export class NoteEntity extends BaseEntity implements NoteType {
+  override id: NoteType["id"];
   text: string;
 
   private constructor(data: NoteType) {
     super(data);
+    this.id = data.id;
     this.text = data.text;
   }
 
   static create(data: NoteCreateData) {
     const noteData = {
-      ...NoteEntity.init(),
+      ...NoteSchema.baseInit(),
       ...data,
     } as NoteType;
 
-    return new NoteEntity(noteData);
+    return R.Ok(new NoteEntity(noteData));
   }
 
   static from(data: NoteType) {
