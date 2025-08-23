@@ -1,6 +1,9 @@
 import { BaseEntity } from "@domain/utils/base.entity";
 import { UserSchema, type UserCreateData, type UserType } from "@domain/user";
 import { Result as R } from "@carbonteq/fp";
+import { createValidator } from "@domain/utils";
+
+const validate = createValidator(UserSchema);
 
 export class UserEntity extends BaseEntity implements UserType {
   override id: UserType["id"];
@@ -21,7 +24,11 @@ export class UserEntity extends BaseEntity implements UserType {
     return R.Ok(new UserEntity(userData));
   }
 
-  static from(data: UserType) {
-    return new UserEntity(data);
+  static fromEncoded(data: UserType) {
+    return validate(data).map((d) => new UserEntity(d));
+  }
+
+  serialize() {
+    return validate(this);
   }
 }

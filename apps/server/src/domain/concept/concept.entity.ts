@@ -4,7 +4,9 @@ import {
   ConceptSchema,
   type ConceptType,
 } from "@domain/concept";
-import { Result as R } from "@carbonteq/fp";
+import { createValidator } from "@domain/utils";
+
+const validate = createValidator(ConceptSchema);
 
 export class ConceptEntity extends BaseEntity implements ConceptType {
   override id: ConceptType["id"];
@@ -22,6 +24,14 @@ export class ConceptEntity extends BaseEntity implements ConceptType {
       ...data,
     } as ConceptType;
 
-    return R.Ok(new ConceptEntity(conceptData));
+    return new ConceptEntity(conceptData);
+  }
+
+  static fromEncoded(data: ConceptType) {
+    return validate(data).map((d) => new ConceptEntity(d));
+  }
+
+  serialize() {
+    return validate(this);
   }
 }

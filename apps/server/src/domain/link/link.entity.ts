@@ -1,8 +1,9 @@
-import { BaseEntity } from "@domain/utils";
+import { BaseEntity, createValidator } from "@domain/utils";
 import { LinkSchema, type LinkCreateData, type LinkType } from "@domain/link";
 import type { ConceptType } from "@domain/concept";
 import type { NoteType } from "@domain/note";
-import { Result as R } from "@carbonteq/fp";
+
+const validate = createValidator(LinkSchema);
 
 export class LinkEntity extends BaseEntity implements LinkType {
   override id: LinkType["id"];
@@ -23,6 +24,14 @@ export class LinkEntity extends BaseEntity implements LinkType {
       ...data,
     } as LinkType;
 
-    return R.Ok(new LinkEntity(linkData));
+    return new LinkEntity(linkData);
+  }
+
+  static fromEncoded(data: LinkType) {
+    return validate(data).map((d) => new LinkEntity(d));
+  }
+
+  serialize() {
+    return validate(this);
   }
 }

@@ -3,7 +3,10 @@ import { enhanceEntityMapper } from "../utils/repo.utils";
 import type { notes } from "@infra/db/models";
 
 const mapper = enhanceEntityMapper((row: typeof notes.$inferSelect) =>
-  NoteEntity.create({
+  NoteEntity.fromEncoded({
+    id: row.id,
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
     text: row.text,
   })
 );

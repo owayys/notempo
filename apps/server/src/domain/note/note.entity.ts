@@ -1,6 +1,7 @@
-import { BaseEntity } from "@domain/utils";
-import { Result as R } from "@carbonteq/fp";
+import { BaseEntity, createValidator } from "@domain/utils";
 import { NoteSchema, type NoteCreateData, type NoteType } from "@domain/note";
+
+const validate = createValidator(NoteSchema);
 
 export class NoteEntity extends BaseEntity implements NoteType {
   override id: NoteType["id"];
@@ -18,10 +19,14 @@ export class NoteEntity extends BaseEntity implements NoteType {
       ...data,
     } as NoteType;
 
-    return R.Ok(new NoteEntity(noteData));
+    return new NoteEntity(noteData);
   }
 
-  static from(data: NoteType) {
-    return new NoteEntity(data);
+  static fromEncoded(data: NoteType) {
+    return validate(data).map((d) => new NoteEntity(d));
+  }
+
+  serialize() {
+    return validate(this);
   }
 }
