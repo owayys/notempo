@@ -1,15 +1,13 @@
-import { ConceptRepository } from "@domain/concept";
-import { LinkRepository } from "@domain/link";
-import { NoteRepository } from "@domain/note";
-import {
-  DrizzleConceptRepository,
-  DrizzleLinkRepository,
-  DrizzleNoteRepository,
-} from "@infra/db/repos";
+import { ConceptRepository } from "@domain/concept/concept.repo";
+import { LinkRepository } from "@domain/link/link.repo";
+import { NoteRepository } from "@domain/note/note.repo";
+import { DrizzleConceptRepository } from "@infra/db/repos/concept.repo";
+import { DrizzleLinkRepository } from "@infra/db/repos/link.repo";
+import { DrizzleNoteRepository } from "@infra/db/repos/note.repo";
 import { asImplementation } from "@infra/di/di.utils";
-import { container } from "tsyringe";
+import type { DependencyContainer } from "tsyringe";
 
-export const registerRepositories = () => {
+export const registerRepositories = (container: DependencyContainer) => {
   container.register(
     ...asImplementation(NoteRepository, DrizzleNoteRepository)
   );

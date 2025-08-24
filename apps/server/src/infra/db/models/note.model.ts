@@ -1,6 +1,6 @@
 import { pgTable, text } from "drizzle-orm/pg-core";
 import { getBaseColumns } from "../utils/model.utils";
-import type { NoteType } from "@domain/note/note.entity";
+import type { NoteType } from "@domain/note/note.schema";
 import { relations } from "drizzle-orm";
 import { links } from "./link.model";
 

@@ -1,6 +1,6 @@
 import { pgTable, text } from "drizzle-orm/pg-core";
 import { getBaseColumns } from "../utils/model.utils";
-import type { ConceptType } from "@domain/concept/concept.entity";
+import type { ConceptType } from "@domain/concept/concept.schema";
 import { relations } from "drizzle-orm";
 import { links } from "./link.model";
 

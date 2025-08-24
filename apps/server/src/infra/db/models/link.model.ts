@@ -1,6 +1,6 @@
 import { pgTable, uuid } from "drizzle-orm/pg-core";
 import { getBaseColumns } from "../utils/model.utils";
-import type { LinkType } from "@domain/link/link.entity";
+import type { LinkType } from "@domain/link/link.schema";
 import { relations } from "drizzle-orm";
 import { concepts } from "./concept.model";
 import { notes } from "./note.model";

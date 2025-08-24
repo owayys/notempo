@@ -10,6 +10,9 @@
   "dependencies": {
     "@carbonteq/fp": "^0.8.2",
     "@neondatabase/serverless": "^1.0.1",
+    "@orpc/client": "^1.8.4",
+    "@orpc/openapi": "^1.8.4",
+    "@orpc/server": "^1.8.4",
     "dotenv": "^17.2.1",
     "drizzle-orm": "^0.44.4",
     "elysia": "latest",
@@ -22,7 +25,6 @@
     "bun-types": "latest",
     "drizzle-kit": "^0.31.4",
     "eslint": "latest",
-    "eslint-config": "workspace:*",
     "tsx": "^4.20.4"
   }
 }

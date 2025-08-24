@@ -1,3 +1,5 @@
-import { conceptRoutes } from "@web/routes/concept.routes";
+import conceptRouter from "./concept.routes";
 
-export const routes = [conceptRoutes];
+export const router = {
+  concept: conceptRouter,
+};

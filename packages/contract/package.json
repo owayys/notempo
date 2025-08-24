@@ -1,0 +1,40 @@
+{
+  "name": "@repo/contract",
+  "version": "1.0.0",
+  "description": "Contracts and schemas for the project",
+  "packageManager": "bun@1.2.20",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "lint": "biome check",
+    "check-types": "tsgo --noEmit --pretty",
+    "test": "echo ok"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts",
+      "types": "./src/index.ts"
+    },
+    "./contracts": {
+      "import": "./src/contracts/index.ts",
+      "require": "./src/contracts/index.ts",
+      "types": "./src/contracts/index.ts"
+    }
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/bun": "latest",
+    "@types/json-schema": "^7.0.15",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "@orpc/contract": "1.8.4",
+    "@orpc/zod": "1.8.4",
+    "zod": "^4.1.0"
+  }
+}

@@ -3,13 +3,9 @@ import "reflect-metadata";
 import { config } from "@infra/config";
 import { wireDI } from "@infra/di";
 import { client } from "@web/client";
-import { routes } from "@web/routes";
+import { container } from "tsyringe";
 
-wireDI();
-
-for (const route of routes) {
-  client.use(route);
-}
+wireDI(container);
 
 client.listen(config.server.PORT);
 
