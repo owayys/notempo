@@ -7,7 +7,6 @@ const base = authenticated.concept;
 
 export const createConceptHandler = base.createConcept.handler(
   async ({ input }) => {
-    console.log(input);
     const conceptWorkflows = container.resolve(ConceptWorkflows);
     const result = await conceptWorkflows.createConcept(input);
 

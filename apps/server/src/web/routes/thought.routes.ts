@@ -15,7 +15,6 @@ export const createThoughtHandler = base.createThought.handler(
 );
 
 export const getThoughtHandler = base.getThought.handler(async ({ input }) => {
-  console.log(input);
   const thoughtWorkflows = container.resolve(ThoughtWorkflows);
   const result = await thoughtWorkflows.getThoughts(input);
 

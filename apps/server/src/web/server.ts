@@ -2,13 +2,24 @@ import "reflect-metadata";
 
 import { config } from "@infra/config";
 import { wireDI } from "@infra/di";
-import { client } from "@web/client";
 import { container } from "tsyringe";
 import { initAuthRouter } from "./routes/auth";
+import { Elysia } from "elysia";
+import { addOpenApiHandler } from "./utils/openapi.handler";
+import { addRpcHandler } from "./utils/rpc.handler";
 
 wireDI(container);
 
+export const client = new Elysia()
+  .get("/", () => "Hello Elysia!")
+  .get("/health", () => ({
+    status: "ok",
+    timestamp: new Date().toISOString(),
+  }));
+
 initAuthRouter(client, container);
+addOpenApiHandler(client, container);
+addRpcHandler(client, container);
 
 client.listen(config.app.PORT);
 
