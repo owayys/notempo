@@ -9,10 +9,10 @@ export class LinkWorkflows {
 
   async createLink(
     conceptId: LinkType["conceptId"],
-    noteId: LinkType["noteId"],
-    alias?: string
+    thoughtId: LinkType["thoughtId"],
+    alias?: string,
   ) {
-    const link = LinkEntity.create({ alias, conceptId, noteId });
+    const link = LinkEntity.create({ alias, conceptId, thoughtId });
     const result = await this.linkRepository.create(link);
     return result;
   }
