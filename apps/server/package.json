@@ -8,24 +8,23 @@
     "lint": "biome lint"
   },
   "dependencies": {
-    "@carbonteq/fp": "^0.8.2",
+    "@carbonteq/fp": "catalog:",
     "@neondatabase/serverless": "^1.0.1",
     "@orpc/client": "^1.8.4",
     "@orpc/openapi": "^1.8.4",
-    "@orpc/server": "^1.8.4",
+    "@orpc/server": "catalog:",
     "better-auth": "^1.3.7",
     "dotenv": "^17.2.1",
     "drizzle-orm": "^0.44.4",
     "elysia": "latest",
     "reflect-metadata": "^0.2.2",
-    "tsyringe": "^4.10.0",
-    "zod": "^4.1.0"
+    "tsyringe": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "latest",
-    "bun-types": "latest",
+    "@types/node": "catalog:",
+    "@types/bun": "catalog:",
     "drizzle-kit": "^0.31.4",
-    "eslint": "latest",
     "tsx": "^4.20.4"
   }
 }

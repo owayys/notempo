@@ -6,7 +6,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "scripts": {
     "lint": "biome check",
     "check-types": "tsgo --noEmit --pretty",
@@ -21,13 +23,13 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "@types/bun": "latest",
+    "@types/bun": "catalog:",
     "@types/json-schema": "^7.0.15",
-    "typescript": "latest"
+    "typescript": "catalog:"
   },
   "dependencies": {
-    "@carbonteq/fp": "^0.8.2",
-    "tsyringe": "^4.10.0",
-    "zod": "^4.1.0"
+    "@carbonteq/fp": "catalog:",
+    "tsyringe": "catalog:",
+    "zod": "catalog:"
   }
 }
