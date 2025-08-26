@@ -1,10 +1,10 @@
 import { ConceptSchema } from "@domain/concept/concept.schema";
-import { NoteSchema } from "@domain/note/note.schema";
+import { ThoughtSchema } from "@domain/thought/thought.schema";
 import { defineEntitySchema } from "@domain/utils";
 import z from "zod";
 
 export const LinkSchema = defineEntitySchema("LinkId", {
-  noteId: NoteSchema.id,
+  thoughtId: ThoughtSchema.id,
   conceptId: ConceptSchema.id,
   alias: z.string().optional().describe("An optional alias for the link"),
 });

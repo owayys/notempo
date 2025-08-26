@@ -5,7 +5,7 @@ import {
   type LinkType,
 } from "@domain/link/link.schema";
 import type { ConceptType } from "@domain/concept/concept.schema";
-import type { NoteType } from "@domain/note/note.schema";
+import type { NoteType } from "@domain/thought/thought.schema";
 
 const validate = createValidator(LinkSchema);
 
