@@ -21,10 +21,10 @@ const mapper = enhanceEntityMapper((row: typeof links.$inferSelect) =>
     id: row.id,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
-    noteId: row.noteId,
+    thoughtId: row.thoughtId,
     conceptId: row.conceptId,
     alias: row.alias ?? undefined,
-  })
+  }),
 );
 
 @injectable()
@@ -33,7 +33,7 @@ export class DrizzleLinkRepository extends LinkRepository {
     super();
   }
   override async create(
-    link: LinkEntity
+    link: LinkEntity,
   ): Promise<RepoResult<LinkEntity, Error>> {
     const encoded = link.serialize();
 
@@ -54,7 +54,7 @@ export class DrizzleLinkRepository extends LinkRepository {
   }
 
   override async findById(
-    id: LinkType["id"]
+    id: LinkType["id"],
   ): Promise<RepoResult<LinkEntity, LinkNotFoundError>> {
     try {
       const row = await this.db.query.links.findFirst({
@@ -73,7 +73,7 @@ export class DrizzleLinkRepository extends LinkRepository {
 
   override async findWithFilters(
     filters: Partial<LinkType>,
-    paginationParams: PaginationParams
+    paginationParams: PaginationParams,
   ): Promise<RepoResult<Paginated<LinkEntity>, LinkNotFoundError>> {
     const pagination = PaginationUtils.getDefaultPagination({
       page: paginationParams.page,
@@ -83,7 +83,7 @@ export class DrizzleLinkRepository extends LinkRepository {
 
     const offset = PaginationUtils.calculateOffset(
       pagination.page,
-      pagination.limit
+      pagination.limit,
     );
 
     const orderBy =
@@ -97,8 +97,8 @@ export class DrizzleLinkRepository extends LinkRepository {
       conditions.push(eq(links.conceptId, filters.conceptId));
     }
 
-    if (filters.noteId) {
-      conditions.push(eq(links.noteId, filters.noteId));
+    if (filters.thoughtId) {
+      conditions.push(eq(links.thoughtId, filters.thoughtId));
     }
 
     const where = and(...conditions);
@@ -120,13 +120,13 @@ export class DrizzleLinkRepository extends LinkRepository {
         links,
         totalCount,
         pagination.page,
-        pagination.limit
-      )
+        pagination.limit,
+      ),
     );
   }
 
   override async update(
-    link: LinkEntity
+    link: LinkEntity,
   ): Promise<RepoResult<LinkEntity, LinkNotFoundError>> {
     const encoded = link.serialize();
 
@@ -153,7 +153,7 @@ export class DrizzleLinkRepository extends LinkRepository {
   }
 
   override async delete(
-    id: LinkType["id"]
+    id: LinkType["id"],
   ): Promise<RepoUnitResult<LinkNotFoundError>> {
     try {
       const [deleted] = await this.db

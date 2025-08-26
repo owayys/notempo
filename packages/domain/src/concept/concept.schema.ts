@@ -1,17 +1,20 @@
+import { UserSchema } from "@domain/user/user.schema";
 import {
   defineEntitySchema,
   PaginatedResultSchema,
   PaginationParamsSchema,
+  removeBaseFields,
 } from "@domain/utils";
 import z from "zod";
 
 export const ConceptSchema = defineEntitySchema("ConceptId", {
   label: z.string().describe("The label of the concept"),
+  authorId: UserSchema.id,
 });
 export type ConceptType = z.infer<typeof ConceptSchema>;
 export type ConceptEncoded = z.input<typeof ConceptSchema>;
 
-export const ConceptCreateData = ConceptSchema.pick({ label: true });
+export const ConceptCreateData = removeBaseFields(ConceptSchema);
 export type ConceptCreateData = z.infer<typeof ConceptCreateData>;
 
 export const CreateConceptParams = ConceptCreateData;

@@ -1,6 +1,7 @@
 import { AppResult } from "@application/utils";
 import { ConceptEntity } from "@domain/concept/concept.entity";
 import {
+  ConceptCreateData,
   GetConceptParams,
   type ConceptType,
 } from "@domain/concept/concept.schema";
@@ -11,10 +12,8 @@ import { autoInjectable } from "tsyringe";
 export class ConceptWorkflows {
   constructor(private readonly conceptRepository: ConceptRepository) {}
 
-  async createConcept(label: ConceptType["label"]) {
-    const concept = ConceptEntity.create({ label });
-    console.log("Creating concept:", concept);
-    console.log("Using repository:", this.conceptRepository);
+  async createConcept(params: ConceptCreateData) {
+    const concept = ConceptEntity.create(params);
     const result = await this.conceptRepository.create(concept);
     return AppResult.fromResult(result);
   }
@@ -22,7 +21,7 @@ export class ConceptWorkflows {
   async getConcepts(params: GetConceptParams) {
     const concepts = await this.conceptRepository.findWithFilters(
       { label: params.label },
-      params
+      params,
     );
     return AppResult.fromResult(concepts);
   }

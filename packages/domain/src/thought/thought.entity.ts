@@ -9,11 +9,13 @@ const validate = createValidator(ThoughtSchema);
 
 export class ThoughtEntity extends BaseEntity implements ThoughtType {
   override id: ThoughtType["id"];
-  text: string;
+  authorId: ThoughtType["authorId"];
+  text: ThoughtType["text"];
 
   private constructor(data: ThoughtType) {
     super(data);
     this.id = data.id;
+    this.authorId = data.authorId;
     this.text = data.text;
   }
 

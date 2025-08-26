@@ -19,6 +19,7 @@ import { and, asc, desc, eq, ilike } from "drizzle-orm";
 const mapper = enhanceEntityMapper((row: typeof thoughts.$inferSelect) =>
   ThoughtEntity.fromEncoded({
     id: row.id,
+    authorId: row.authorId,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
     text: row.text,

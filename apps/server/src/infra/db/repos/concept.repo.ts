@@ -19,10 +19,11 @@ import { and, asc, desc, eq, ilike } from "drizzle-orm";
 const mapper = enhanceEntityMapper((row: typeof concepts.$inferSelect) =>
   ConceptEntity.fromEncoded({
     id: row.id,
+    authorId: row.authorId,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
     label: row.label,
-  })
+  }),
 );
 
 @injectable()
@@ -31,7 +32,7 @@ export class DrizzleConceptRepository extends ConceptRepository {
     super();
   }
   override async create(
-    concept: ConceptEntity
+    concept: ConceptEntity,
   ): Promise<RepoResult<ConceptEntity, Error>> {
     const encoded = concept.serialize();
 
@@ -52,7 +53,7 @@ export class DrizzleConceptRepository extends ConceptRepository {
   }
 
   override async findById(
-    id: ConceptType["id"]
+    id: ConceptType["id"],
   ): Promise<RepoResult<ConceptEntity, ConceptNotFoundError>> {
     try {
       const row = await this.db.query.concepts.findFirst({
@@ -71,7 +72,7 @@ export class DrizzleConceptRepository extends ConceptRepository {
 
   override async findWithFilters(
     filters: Partial<ConceptType>,
-    paginationParams: PaginationParams
+    paginationParams: PaginationParams,
   ): Promise<RepoResult<Paginated<ConceptEntity>, ConceptNotFoundError>> {
     const pagination = PaginationUtils.getDefaultPagination({
       page: paginationParams.page,
@@ -81,7 +82,7 @@ export class DrizzleConceptRepository extends ConceptRepository {
 
     const offset = PaginationUtils.calculateOffset(
       pagination.page,
-      pagination.limit
+      pagination.limit,
     );
 
     const orderBy =
@@ -114,13 +115,13 @@ export class DrizzleConceptRepository extends ConceptRepository {
         concepts,
         totalCount,
         pagination.page,
-        pagination.limit
-      )
+        pagination.limit,
+      ),
     );
   }
 
   override async update(
-    concept: ConceptEntity
+    concept: ConceptEntity,
   ): Promise<RepoResult<ConceptEntity, ConceptNotFoundError>> {
     const encoded = concept.serialize();
 
@@ -147,7 +148,7 @@ export class DrizzleConceptRepository extends ConceptRepository {
   }
 
   override async delete(
-    id: ConceptType["id"]
+    id: ConceptType["id"],
   ): Promise<RepoUnitResult<ConceptNotFoundError>> {
     try {
       const [deleted] = await this.db

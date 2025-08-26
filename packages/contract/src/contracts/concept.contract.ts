@@ -6,9 +6,9 @@ import {
   GetConceptParams,
   GetConceptResponse,
 } from "@domain/concept/concept.schema";
-import { appPublicBase } from "@contract/utils/oc.base";
+import { appAuthenticatedBase } from "@contract/utils/oc.base";
 
-const conceptBase = appPublicBase;
+const conceptBase = appAuthenticatedBase;
 
 export const createConcept = conceptBase
   .route({

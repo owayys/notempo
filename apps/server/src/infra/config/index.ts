@@ -1,7 +1,7 @@
 import db from "./db.config";
-import server from "./server.config";
+import app from "./app.config";
 
 export const config = {
   db,
-  server,
+  app,
 };

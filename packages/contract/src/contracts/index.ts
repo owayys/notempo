@@ -2,7 +2,10 @@ import type { ContractRouterClient } from "@orpc/contract";
 import conceptContract from "./concept.contract";
 
 export const CONTRACT = {
-  concept: conceptContract,
+  authenticated: {
+    concept: conceptContract,
+  },
+  public: {},
 };
 
 export type AppRouterClient = ContractRouterClient<typeof CONTRACT>;

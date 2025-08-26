@@ -10,11 +10,13 @@ const validate = createValidator(ConceptSchema);
 
 export class ConceptEntity extends BaseEntity implements ConceptType {
   override id: ConceptType["id"];
+  authorId: ConceptType["authorId"];
   label: string;
 
   private constructor(data: ConceptType) {
     super(data);
     this.id = data.id;
+    this.authorId = data.authorId;
     this.label = data.label;
   }
 
