@@ -1,26 +1,26 @@
+import { Result as R } from "@carbonteq/fp";
 import { ConceptEntity } from "@domain/concept/concept.entity";
 import {
   ConceptNotFoundError,
   ConceptValidationError,
 } from "@domain/concept/concept.errors";
 import {
-  ConceptRepository,
   type ConceptFindFilters,
+  ConceptRepository,
 } from "@domain/concept/concept.repo";
 import type { ConceptType } from "@domain/concept/concept.schema";
 import {
-  PaginationUtils,
   type Paginated,
   type PaginationParams,
+  PaginationUtils,
   type RepoResult,
   type RepoUnitResult,
 } from "@domain/utils";
-import { injectable } from "tsyringe";
-import { injectDb, type AppDatabase } from "@infra/db/client";
+import { type AppDatabase, injectDb } from "@infra/db/client";
 import { concepts } from "@infra/db/models";
 import { enhanceEntityMapper } from "@infra/db/utils/repo.utils";
-import { Result as R } from "@carbonteq/fp";
 import { and, asc, desc, eq, ilike } from "drizzle-orm";
+import { injectable } from "tsyringe";
 
 const mapper = enhanceEntityMapper((row: typeof concepts.$inferSelect) =>
   ConceptEntity.fromEncoded({
@@ -97,8 +97,8 @@ export class DrizzleConceptRepository extends ConceptRepository {
           ? asc(concepts.label)
           : desc(concepts.label)
         : pagination.sortOrder === "asc"
-        ? asc(concepts.updatedAt)
-        : desc(concepts.updatedAt);
+          ? asc(concepts.updatedAt)
+          : desc(concepts.updatedAt);
 
     const conditions = [ilike(concepts.label, `%${filters.label ?? ""}%`)];
 

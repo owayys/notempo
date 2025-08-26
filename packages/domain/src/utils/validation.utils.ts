@@ -1,11 +1,11 @@
-import { z } from "zod";
 import {
   ValidationError,
   type ValidationIssue,
 } from "@domain/utils/base.errors";
+import { z } from "zod";
 
 export const mergeValidationErrors = (
-  errors: ValidationError[]
+  errors: ValidationError[],
 ): ValidationError => {
   const issues: ValidationIssue[] = errors.flatMap((err) => err.issues);
 
@@ -13,7 +13,7 @@ export const mergeValidationErrors = (
 };
 
 export const validationErrorsToSingle = (
-  errors: ValidationError[]
+  errors: ValidationError[],
 ): ValidationError => {
   if (errors.length === 0) {
     return ValidationError.single("Unknown validation error");
@@ -28,20 +28,20 @@ export const validationErrorsToSingle = (
 };
 
 export const zodErrorsToValidationError = (
-  zodErrors: z.ZodError[]
+  zodErrors: z.ZodError[],
 ): ValidationError => {
   if (zodErrors.length === 0) {
     return ValidationError.single("Unknown validation error");
   }
 
   const issues: ValidationIssue[] = zodErrors.flatMap((err) =>
-    getIssuesFromZodError(err)
+    getIssuesFromZodError(err),
   );
   return ValidationError.multiple(issues);
 };
 
 export const zodErrorToValidationError = (
-  error: z.ZodError
+  error: z.ZodError,
 ): ValidationError => {
   const issues = getIssuesFromZodError(error);
   return ValidationError.multiple(issues);
@@ -66,7 +66,7 @@ export const getIssuesFromZodIssue = (issue: z.ZodIssue): ValidationIssue[] => {
             issue.message ||
             `TypeError: Expected ${expectedType}, got ${receivedType}`,
           cause: issue,
-          value: (issue as any).received,
+          value: issue.input,
           path: path.map(String),
           field,
         },
@@ -75,7 +75,7 @@ export const getIssuesFromZodIssue = (issue: z.ZodIssue): ValidationIssue[] => {
 
     case "too_small": {
       const smallIssue = issue;
-      let typeDescription = smallIssue.origin ?? "value";
+      const typeDescription = smallIssue.origin ?? "value";
 
       let constraint = "";
       if (smallIssue.exact) {
@@ -98,7 +98,7 @@ export const getIssuesFromZodIssue = (issue: z.ZodIssue): ValidationIssue[] => {
 
     case "too_big": {
       const bigIssue = issue;
-      let typeDescription = bigIssue.origin ?? "value";
+      const typeDescription = bigIssue.origin ?? "value";
 
       let constraint = "";
       if (bigIssue.exact) {
@@ -160,8 +160,8 @@ export const getIssuesFromZodIssue = (issue: z.ZodIssue): ValidationIssue[] => {
       if (unionIssue.errors) {
         return unionIssue.errors.flatMap((unionErrorArray) =>
           unionErrorArray.flatMap((unionIssue) =>
-            getIssuesFromZodIssue(unionIssue)
-          )
+            getIssuesFromZodIssue(unionIssue),
+          ),
         );
       }
       return [

@@ -1,12 +1,12 @@
-import { BaseEntity } from "@domain/utils/base.entity";
+import { Result as R } from "@carbonteq/fp";
 import {
-  UserSchema,
   type UserCreateData,
   type UserEncoded,
+  UserSchema,
   type UserType,
 } from "@domain/user/user.schema";
-import { Result as R } from "@carbonteq/fp";
 import { createValidator } from "@domain/utils";
+import { BaseEntity } from "@domain/utils/base.entity";
 
 const validate = createValidator(UserSchema);
 

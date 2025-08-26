@@ -6,7 +6,10 @@ type ThoughtId = ThoughtType["id"];
 export class ThoughtNotFoundError extends NotFoundError {
   override readonly code = "NOTE_NOT_FOUND" as const;
 
-  constructor(readonly listId: ThoughtId, context?: Record<string, unknown>) {
+  constructor(
+    readonly listId: ThoughtId,
+    context?: Record<string, unknown>,
+  ) {
     super("Thought", listId, context);
   }
 }

@@ -73,7 +73,7 @@
       "indentStyle": "space",
       "lineEnding": "lf",
       "quoteStyle": "double",
-      "semicolons": "asNeeded",
+      "semicolons": "always",
       "trailingCommas": "all"
     },
     "linter": {

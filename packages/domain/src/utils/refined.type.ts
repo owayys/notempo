@@ -1,5 +1,5 @@
-import z from "zod";
 import { addMethodsToSchema } from "@domain/utils/schema.utils";
+import z from "zod";
 
 type Brand<T> = { __brand: T };
 
@@ -9,11 +9,11 @@ export const UUIDBase = z
   .refine(
     (val) =>
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
-        val
+        val,
       ),
     {
       message: "Invalid UUID format",
-    }
+    },
   )
   .brand("UUID");
 
@@ -31,7 +31,7 @@ export type UUIDEncoded = z.input<typeof UUID>;
 export const DateTimeBase = z
   .date()
   .describe("A date-time string in ISO 8601 format")
-  .refine((date) => !isNaN(date.getTime()), {
+  .refine((date) => !Number.isNaN(date.getTime()), {
     message: "Invalid date",
   });
 

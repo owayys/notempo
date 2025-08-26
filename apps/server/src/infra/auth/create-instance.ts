@@ -1,3 +1,4 @@
+import { UserCreateData } from "@domain/user/user.schema";
 import { config } from "@infra/config";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
@@ -6,7 +7,6 @@ import { openAPI } from "better-auth/plugins";
 import { z } from "zod/v4";
 import { CORS_TRUSTED_ORIGINS } from "@/constants";
 import type { AppDatabase } from "../db/client";
-import { UserCreateData } from "@domain/user/user.schema";
 
 const beforeHooks = createAuthMiddleware(async (ctx) => {
   if (ctx.path === "/sign-up/email") {

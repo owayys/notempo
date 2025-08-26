@@ -1,14 +1,14 @@
 import { config } from "@infra/config";
-import { type BunSQLDatabase, drizzle } from "drizzle-orm/bun-sql";
 import * as schema from "@infra/db/schema";
+import { SQL } from "bun";
+import { type BunSQLDatabase, drizzle } from "drizzle-orm/bun-sql";
 import {
   container,
-  inject,
-  instanceCachingFactory,
   type DependencyContainer,
   type FactoryProvider,
+  inject,
+  instanceCachingFactory,
 } from "tsyringe";
-import { SQL } from "bun";
 
 export const createDbInstance = () => {
   const client = new SQL(config.db.DATABASE_URL, {

@@ -1,7 +1,7 @@
 import type { RepoResult, RepoUnitResult } from "@domain/utils";
 import type { UserEntity } from "./user.entity";
-import type { UserType, UserUpdateData } from "./user.schema";
 import type { UserNotFoundError } from "./user.errors";
+import type { UserType, UserUpdateData } from "./user.schema";
 
 export abstract class UserRepository {
   abstract create(user: UserEntity): Promise<RepoResult<UserEntity>>;

@@ -32,7 +32,7 @@ export const createPaginatedResult = <T>(
   items: T[],
   totalCount: number,
   page: number,
-  limit: number
+  limit: number,
 ): PaginatedResult<T> => {
   const totalPages = Math.ceil(totalCount / limit);
 

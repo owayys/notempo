@@ -1,10 +1,10 @@
-import { BaseEntity } from "@domain/utils/base.entity";
 import {
   ConceptCreateData,
   ConceptSchema,
   type ConceptType,
 } from "@domain/concept/concept.schema";
 import { createValidator } from "@domain/utils";
+import { BaseEntity } from "@domain/utils/base.entity";
 
 const validate = createValidator(ConceptSchema);
 

@@ -2,9 +2,9 @@ import "reflect-metadata";
 
 import { config } from "@infra/config";
 import { wireDI } from "@infra/di";
+import { Elysia } from "elysia";
 import { container } from "tsyringe";
 import { initAuthRouter } from "./routes/auth";
-import { Elysia } from "elysia";
 import { addOpenApiHandler } from "./utils/openapi.handler";
 import { addRpcHandler } from "./utils/rpc.handler";
 

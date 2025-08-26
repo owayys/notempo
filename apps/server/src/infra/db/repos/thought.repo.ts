@@ -1,26 +1,26 @@
+import { Result as R } from "@carbonteq/fp";
 import { ThoughtEntity } from "@domain/thought/thought.entity";
 import {
   ThoughtNotFoundError,
   ThoughtValidationError,
 } from "@domain/thought/thought.errors";
 import {
-  ThoughtRepository,
   type ThoughtFindFilters,
+  ThoughtRepository,
 } from "@domain/thought/thought.repo";
 import type { ThoughtType } from "@domain/thought/thought.schema";
-import { enhanceEntityMapper } from "../utils/repo.utils";
-import { thoughts } from "@infra/db/models";
-import { injectable } from "tsyringe";
-import { injectDb, type AppDatabase } from "@infra/db/client";
-import { Result as R } from "@carbonteq/fp";
 import {
-  PaginationUtils,
   type Paginated,
   type PaginationParams,
+  PaginationUtils,
   type RepoResult,
   type RepoUnitResult,
 } from "@domain/utils";
+import { type AppDatabase, injectDb } from "@infra/db/client";
+import { thoughts } from "@infra/db/models";
 import { and, asc, desc, eq, ilike } from "drizzle-orm";
+import { injectable } from "tsyringe";
+import { enhanceEntityMapper } from "../utils/repo.utils";
 
 const mapper = enhanceEntityMapper((row: typeof thoughts.$inferSelect) =>
   ThoughtEntity.fromEncoded({
@@ -98,8 +98,8 @@ export class DrizzleThoughtRepository extends ThoughtRepository {
           ? asc(thoughts.text)
           : desc(thoughts.text)
         : pagination.sortOrder === "asc"
-        ? asc(thoughts.updatedAt)
-        : desc(thoughts.updatedAt);
+          ? asc(thoughts.updatedAt)
+          : desc(thoughts.updatedAt);
 
     const conditions = [eq(thoughts.authorId, filters.authorId)];
 

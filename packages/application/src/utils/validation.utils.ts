@@ -18,28 +18,28 @@ const RuntimeValidationToken = Symbol.for("EnsureValidationThroughCreation");
 
 export const simpleSchemaDto = <Name extends string, A, I>(
   className: Name,
-  schema: z.ZodSchema<A, I>
+  schema: z.ZodSchema<A, I>,
 ) => {
   class SimpleDto {
     static readonly schema = schema;
 
     protected constructor(
       readonly data: A,
-      token: typeof RuntimeValidationToken
+      token: typeof RuntimeValidationToken,
     ) {
       if (token !== RuntimeValidationToken) {
         throw new Error(
-          `${className} should only be instantiated through the static create method. Use ${className}.create(input) to create a valid instance.`
+          `${className} should only be instantiated through the static create method. Use ${className}.create(input) to create a valid instance.`,
         );
       }
     }
 
     static create(
-      input: unknown
+      input: unknown,
     ): Result<TSimpleDto<Name, SimpleDto>, ValidationError> {
       return createValidator(schema)(input).map(
         // biome-ignore lint/complexity/noThisInStatic: Intentional factory
-        (validatedData) => new this(validatedData, RuntimeValidationToken)
+        (validatedData) => new this(validatedData, RuntimeValidationToken),
       );
     }
   }
@@ -52,7 +52,7 @@ export const simpleSchemaDto = <Name extends string, A, I>(
 };
 
 export const dtoStandardSchema = <T, Out, In>(
-  dtoConst: DtoSchemaInput<T, Out, In>
+  dtoConst: DtoSchemaInput<T, Out, In>,
 ): DtoSchemaOutput<T, In> => {
   return {
     "~standard": {
@@ -72,7 +72,7 @@ export const dtoStandardSchema = <T, Out, In>(
             ({
               message: issue.message,
               path: issue.path,
-            } satisfies StandardSchemaV1.Issue)
+            }) satisfies StandardSchemaV1.Issue,
         );
 
         return { issues } satisfies StandardSchemaV1.FailureResult;

@@ -24,7 +24,7 @@ export class AppError extends Error {
   private constructor(
     readonly status: AppErrStatus,
     message: string,
-    cause?: unknown
+    cause?: unknown,
   ) {
     super(message, { cause });
   }

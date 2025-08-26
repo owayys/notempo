@@ -1,5 +1,5 @@
-import { implement } from "@orpc/server";
 import { CONTRACT } from "@contract/contracts";
+import { implement } from "@orpc/server";
 import type { AppContext, AuthenticatedContext } from "@web/types";
 
 export const pub = implement(CONTRACT.public);

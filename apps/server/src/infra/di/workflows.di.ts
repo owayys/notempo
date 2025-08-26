@@ -1,6 +1,6 @@
 import { ConceptWorkflows } from "@application/workflows/concept.workflows";
-import { ThoughtWorkflows } from "@application/workflows/thought.workflows";
 import { LinkWorkflows } from "@application/workflows/link.workflows";
+import { ThoughtWorkflows } from "@application/workflows/thought.workflows";
 import type { DependencyContainer } from "tsyringe";
 
 const workflows = [ThoughtWorkflows, ConceptWorkflows, LinkWorkflows] as const;

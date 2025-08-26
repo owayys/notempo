@@ -6,8 +6,8 @@ import {
   instanceCachingFactory,
 } from "tsyringe";
 import * as authSchema from "@/infra/db/models/auth.model";
-import { createBetterAuthInstance } from "./create-instance";
 import { resolveDbFromContainer } from "../db/client";
+import { createBetterAuthInstance } from "./create-instance";
 
 const AuthSym = Symbol.for("AuthProvider");
 export type AuthHandler = ReturnType<typeof createBetterAuthInstance>;

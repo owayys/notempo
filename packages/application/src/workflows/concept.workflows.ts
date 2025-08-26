@@ -1,11 +1,11 @@
 import { AppResult } from "@application/utils";
 import { ConceptEntity } from "@domain/concept/concept.entity";
+import { ConceptRepository } from "@domain/concept/concept.repo";
 import {
   CreateConceptParams,
   GetConceptDetailsParams,
   GetConceptParams,
 } from "@domain/concept/concept.schema";
-import { ConceptRepository } from "@domain/concept/concept.repo";
 import { autoInjectable } from "tsyringe";
 
 @autoInjectable()

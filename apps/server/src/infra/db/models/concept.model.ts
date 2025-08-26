@@ -1,7 +1,7 @@
-import { pgTable, text, uuid } from "drizzle-orm/pg-core";
-import { getBaseColumns } from "../utils/model.utils";
 import type { ConceptType } from "@domain/concept/concept.schema";
 import { relations } from "drizzle-orm";
+import { pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { getBaseColumns } from "../utils/model.utils";
 import { links } from "./link.model";
 
 export const concepts = pgTable("concepts", {

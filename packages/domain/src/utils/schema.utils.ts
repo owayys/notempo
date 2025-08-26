@@ -1,7 +1,7 @@
 import { Result } from "@carbonteq/fp";
-import z from "zod";
 import { type ValidationError } from "@domain/utils/base.errors";
 import { zodErrorToValidationError } from "@domain/utils/validation.utils";
+import z from "zod";
 
 export const createValidator = <T>(schema: z.ZodSchema<T>) => {
   return (data: unknown): Result<T, ValidationError> => {
@@ -23,14 +23,14 @@ export const addMethodsToSchema = <T, Methods extends Record<string, unknown>>(
 ): ExtendedSchema<T, Methods> => {
   const extended = schema as ExtendedSchema<T, Methods>;
   for (const [key, value] of Object.entries(methods)) {
+    // biome-ignore lint/suspicious/noExplicitAny: Have to work around the type system here
     (extended as any)[key] = value;
   }
   return extended;
 };
 
-export const removeBaseFields = <T extends z.ZodObject<any>>(schema: T) => {
-  const shape = schema.shape;
-  const { id, createdAt, updatedAt, ...fieldsWithoutBase } = shape;
+export const removeBaseFields = <T extends z.ZodObject>({ shape }: T) => {
+  const { id: _, createdAt: __, updatedAt: ___, ...fieldsWithoutBase } = shape;
 
   return z.object(fieldsWithoutBase) as z.ZodObject<
     Omit<T["shape"], "id" | "createdAt" | "updatedAt">

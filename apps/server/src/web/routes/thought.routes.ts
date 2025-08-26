@@ -1,6 +1,6 @@
+import { ThoughtWorkflows } from "@application/workflows/thought.workflows";
 import { container } from "tsyringe";
 import { authenticated } from "../utils/orpc.utils";
-import { ThoughtWorkflows } from "@application/workflows/thought.workflows";
 import { handleAppResult } from "../utils/result-handler.utils";
 
 const base = authenticated.thought;

@@ -1,6 +1,6 @@
+import type { UserType } from "@domain/user/user.schema";
 import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { getBaseColumns, getPrimaryKeyCol } from "../utils/model.utils";
-import type { UserType } from "@domain/user/user.schema";
 
 type UserId = UserType["id"];
 

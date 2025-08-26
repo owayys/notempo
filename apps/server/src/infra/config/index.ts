@@ -1,5 +1,5 @@
-import db from "./db.config";
 import app from "./app.config";
+import db from "./db.config";
 
 export const config = {
   db,

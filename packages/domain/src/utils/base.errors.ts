@@ -6,7 +6,7 @@ export abstract class AppError extends Error {
   constructor(
     message: string,
     context?: Record<string, unknown>,
-    cause?: unknown
+    cause?: unknown,
   ) {
     super(message, { cause });
     this.name = this.constructor.name;
@@ -41,7 +41,7 @@ export class ValidationError extends AppError {
     message: string,
     issues: ValidationIssue[] = [],
     context?: Record<string, unknown>,
-    cause?: unknown
+    cause?: unknown,
   ) {
     super(message, context, cause);
     this.issues = issues;
@@ -63,7 +63,7 @@ export class ValidationError extends AppError {
     field?: string,
     value?: unknown,
     context?: Record<string, unknown>,
-    cause?: unknown
+    cause?: unknown,
   ): ValidationError {
     const issues: ValidationIssue[] = field ? [{ field, value, message }] : [];
     return new ValidationError(message, issues, context, cause);
@@ -71,7 +71,7 @@ export class ValidationError extends AppError {
 
   static multiple(
     issues: ValidationIssue[],
-    context?: Record<string, unknown>
+    context?: Record<string, unknown>,
   ): ValidationError {
     const message = `Validation failed with ${issues.length} error(s): ${issues
       .map((i) => i.message)
@@ -89,7 +89,7 @@ export class NotFoundError extends AppError {
     resourceType: string,
     resourceId: string,
     context?: Record<string, unknown>,
-    cause?: unknown
+    cause?: unknown,
   ) {
     super(`${resourceType} with id '${resourceId}' not found`, context, cause);
     this.resourceType = resourceType;
@@ -103,7 +103,7 @@ export class UnauthorizedError extends AppError {
   constructor(
     message = "Authentication required",
     context?: Record<string, unknown>,
-    cause?: unknown
+    cause?: unknown,
   ) {
     super(message, context, cause);
   }
@@ -117,7 +117,7 @@ export class ForbiddenError extends AppError {
     message = "Insufficient permissions",
     requiredPermission?: string,
     context?: Record<string, unknown>,
-    cause?: unknown
+    cause?: unknown,
   ) {
     super(message, context, cause);
     this.requiredPermission = requiredPermission;
@@ -131,7 +131,7 @@ export class ConflictError extends AppError {
   constructor(
     conflictReason: string,
     context?: Record<string, unknown>,
-    cause?: unknown
+    cause?: unknown,
   ) {
     super(`Conflict: ${conflictReason}`, context, cause);
     this.conflictReason = conflictReason;
@@ -145,7 +145,7 @@ export class InternalError extends AppError {
   constructor(
     message = "Internal server error",
     originalError?: Error,
-    context?: Record<string, unknown>
+    context?: Record<string, unknown>,
   ) {
     super(message, context, originalError);
     this.originalError = originalError;
@@ -161,12 +161,12 @@ export class ExternalServiceError extends AppError {
     serviceName: string,
     message?: string,
     serviceError?: unknown,
-    context?: Record<string, unknown>
+    context?: Record<string, unknown>,
   ) {
     super(
       message || `External service '${serviceName}' error`,
       context,
-      serviceError
+      serviceError,
     );
     this.serviceName = serviceName;
     this.serviceError = serviceError;
@@ -186,7 +186,7 @@ export const isNotFoundError = (error: unknown): error is NotFoundError => {
 };
 
 export const isUnauthorizedError = (
-  error: unknown
+  error: unknown,
 ): error is UnauthorizedError => {
   return error instanceof UnauthorizedError;
 };
@@ -204,7 +204,7 @@ export const isInternalError = (error: unknown): error is InternalError => {
 };
 
 export const isExternalServiceError = (
-  error: unknown
+  error: unknown,
 ): error is ExternalServiceError => {
   return error instanceof ExternalServiceError;
 };

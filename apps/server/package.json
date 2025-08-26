@@ -5,7 +5,7 @@
     "build": "bun build --target bun --outfile dist/server.js ./src/web/server.ts",
     "dev": "bun run --watch src/web/server.ts",
     "start": "node dist/server.js",
-    "lint": "eslint src/**/*.ts"
+    "lint": "biome lint"
   },
   "dependencies": {
     "@carbonteq/fp": "^0.8.2",

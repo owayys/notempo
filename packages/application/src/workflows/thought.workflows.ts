@@ -1,4 +1,5 @@
 import { AppResult } from "@application/utils";
+import { Result as R } from "@carbonteq/fp";
 import { LinkEntity } from "@domain/link/link.entity";
 import { LinkRepository } from "@domain/link/link.repo";
 import { ThoughtEntity } from "@domain/thought/thought.entity";
@@ -8,9 +9,8 @@ import {
   GetThoughtDetailsParams,
   GetThoughtParams,
 } from "@domain/thought/thought.schema";
-import { autoInjectable } from "tsyringe";
-import { Result as R } from "@carbonteq/fp";
 import { validationErrorsToSingle } from "@domain/utils/validation.utils";
+import { autoInjectable } from "tsyringe";
 
 @autoInjectable()
 export class ThoughtWorkflows {

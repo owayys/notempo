@@ -3,11 +3,11 @@ import { RPCHandler } from "@orpc/server/fetch";
 import { BatchHandlerPlugin } from "@orpc/server/plugins";
 import { router } from "@web/routes";
 import type { AppContext } from "@web/types";
+import type Elysia from "elysia";
 import type { DependencyContainer } from "tsyringe";
 import { createAuthContext } from "./auth-context";
-import { commonPlugins } from "./orpc.plugins";
 import { validationErrMap } from "./orpc.interceptors";
-import type Elysia from "elysia";
+import { commonPlugins } from "./orpc.plugins";
 
 export const addRpcHandler = (app: Elysia, container: DependencyContainer) => {
   const rpcHandler = new RPCHandler<AppContext>(router, {

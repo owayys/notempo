@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { addMethodsToSchema } from "@domain/utils/schema.utils";
 import { DateTime, UUID } from "@domain/utils/refined.type";
+import { addMethodsToSchema } from "@domain/utils/schema.utils";
+import { z } from "zod";
 
 export const baseEntityFields = {
   id: UUID,
@@ -14,10 +14,10 @@ const baseEntityStruct = z.object(baseEntityFields);
 
 export const defineEntitySchema = <
   Tag extends string,
-  Fields extends Record<string, z.ZodType>
+  Fields extends Record<string, z.ZodType>,
 >(
   tag: Tag,
-  fields: Fields
+  fields: Fields,
 ) => {
   const id = UUID.extend(tag);
 

@@ -1,9 +1,9 @@
-import { BaseEntity, createValidator } from "@domain/utils";
 import {
-  ThoughtSchema,
   type ThoughtCreateData,
+  ThoughtSchema,
   type ThoughtType,
 } from "@domain/thought/thought.schema";
+import { BaseEntity, createValidator } from "@domain/utils";
 
 const validate = createValidator(ThoughtSchema);
 

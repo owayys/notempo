@@ -8,7 +8,7 @@ type ConcreteConstructor<T> = new (...args: any[]) => T;
 
 export const asImplementation = <T>(
   InterfaceClass: AbstractConstructor<T>,
-  ImplementationClass: ConcreteConstructor<T>
+  ImplementationClass: ConcreteConstructor<T>,
 ): [InjectionToken<T>, ClassProvider<T>] => {
   return [
     InterfaceClass as ConcreteConstructor<T>,

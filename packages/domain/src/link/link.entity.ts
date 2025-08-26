@@ -1,11 +1,11 @@
-import { BaseEntity, createValidator } from "@domain/utils";
+import type { ConceptType } from "@domain/concept/concept.schema";
 import {
-  LinkSchema,
   type LinkCreateData,
+  LinkSchema,
   type LinkType,
 } from "@domain/link/link.schema";
-import type { ConceptType } from "@domain/concept/concept.schema";
 import type { ThoughtType } from "@domain/thought/thought.schema";
+import { BaseEntity, createValidator } from "@domain/utils";
 
 const validate = createValidator(LinkSchema);
 

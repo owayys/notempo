@@ -1,3 +1,4 @@
+import { Result as R } from "@carbonteq/fp";
 import { LinkEntity } from "@domain/link/link.entity";
 import {
   LinkNotFoundError,
@@ -6,18 +7,17 @@ import {
 import { LinkRepository } from "@domain/link/link.repo";
 import type { LinkType } from "@domain/link/link.schema";
 import {
-  PaginationUtils,
   type Paginated,
   type PaginationParams,
+  PaginationUtils,
   type RepoResult,
   type RepoUnitResult,
 } from "@domain/utils";
-import { injectable } from "tsyringe";
-import { injectDb, type AppDatabase } from "@infra/db/client";
+import { type AppDatabase, injectDb } from "@infra/db/client";
 import { links } from "@infra/db/models";
 import { enhanceEntityMapper } from "@infra/db/utils/repo.utils";
-import { Result as R } from "@carbonteq/fp";
 import { and, asc, desc, eq } from "drizzle-orm";
+import { injectable } from "tsyringe";
 
 const mapper = enhanceEntityMapper((row: typeof links.$inferSelect) =>
   LinkEntity.fromEncoded({

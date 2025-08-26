@@ -1,11 +1,10 @@
 import { onError } from "@orpc/client";
+import { experimental_SmartCoercionPlugin as SmartCoercionPlugin } from "@orpc/json-schema";
 import { OpenAPIHandler } from "@orpc/openapi/fetch";
+import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
 import { router } from "@web/routes";
 import type { AppContext } from "@web/types";
 import { validationErrMap } from "@web/utils/orpc.interceptors";
-import { CORSPlugin, ResponseHeadersPlugin } from "@orpc/server/plugins";
-import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
-import { experimental_SmartCoercionPlugin as SmartCoercionPlugin } from "@orpc/json-schema";
 import type Elysia from "elysia";
 import type { DependencyContainer } from "tsyringe";
 import { createAuthContext } from "./auth-context";

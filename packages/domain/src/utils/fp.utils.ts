@@ -3,10 +3,10 @@ import type { ValidationError } from "@domain/utils/base.errors";
 import { validationErrorsToSingle } from "@domain/utils/validation.utils";
 
 function collectValidationErrors<T>(
-  results: Result<Promise<T>, ValidationError>[]
+  results: Result<Promise<T>, ValidationError>[],
 ): never;
 function collectValidationErrors<T>(
-  results: Result<T, ValidationError>[]
+  results: Result<T, ValidationError>[],
 ): Result<T[], ValidationError>;
 function collectValidationErrors<T>(results: Result<T, ValidationError>[]) {
   return Result.all(...results).mapErr(validationErrorsToSingle);

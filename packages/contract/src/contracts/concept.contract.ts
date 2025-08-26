@@ -1,3 +1,4 @@
+import { appAuthenticatedBase } from "@contract/utils/oc.base";
 import {
   CreateConceptParams,
   CreateConceptResponse,
@@ -6,7 +7,6 @@ import {
   GetConceptParams,
   GetConceptResponse,
 } from "@domain/concept/concept.schema";
-import { appAuthenticatedBase } from "@contract/utils/oc.base";
 
 const conceptBase = appAuthenticatedBase;
 

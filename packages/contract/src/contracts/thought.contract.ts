@@ -1,3 +1,4 @@
+import { appAuthenticatedBase } from "@contract/utils/oc.base";
 import {
   CreateThoughtParams,
   CreateThoughtResponse,
@@ -6,7 +7,6 @@ import {
   GetThoughtParams,
   GetThoughtResponse,
 } from "@domain/thought/thought.schema";
-import { appAuthenticatedBase } from "@contract/utils/oc.base";
 
 const thoughtBase = appAuthenticatedBase;
 
