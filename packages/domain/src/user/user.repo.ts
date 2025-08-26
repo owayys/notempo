@@ -4,7 +4,7 @@ import type { UserType, UserUpdateData } from "./user.schema";
 import type { UserNotFoundError } from "./user.errors";
 
 export abstract class UserRepository {
-  abstract create(user: UserEntity): Promise<RepoResult<UserEntity, Error>>;
+  abstract create(user: UserEntity): Promise<RepoResult<UserEntity>>;
   abstract findById(
     id: UserType["id"],
   ): Promise<RepoResult<UserEntity, UserNotFoundError>>;

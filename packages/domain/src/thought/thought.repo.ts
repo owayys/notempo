@@ -8,15 +8,18 @@ import type {
   RepoUnitResult,
 } from "@domain/utils";
 
+export interface ThoughtFindFilters {
+  authorId: ThoughtType["authorId"];
+  text?: ThoughtType["text"];
+}
+
 export abstract class ThoughtRepository {
-  abstract create(
-    thought: ThoughtEntity,
-  ): Promise<RepoResult<ThoughtEntity, Error>>;
+  abstract create(thought: ThoughtEntity): Promise<RepoResult<ThoughtEntity>>;
   abstract findById(
     id: ThoughtType["id"],
   ): Promise<RepoResult<ThoughtEntity, ThoughtNotFoundError>>;
   abstract findWithFilters(
-    filters: Partial<ThoughtType>,
+    filters: ThoughtFindFilters,
     paginationParams: PaginationParams,
   ): Promise<RepoResult<Paginated<ThoughtEntity>, ThoughtNotFoundError>>;
   abstract update(

@@ -2,8 +2,8 @@ import { UserSchema } from "@domain/user/user.schema";
 import {
   defineEntitySchema,
   PaginatedResultSchema,
-  PaginationParamsSchema,
   removeBaseFields,
+  withPaginationParams,
 } from "@domain/utils";
 import z from "zod";
 
@@ -23,7 +23,8 @@ export type CreateConceptParams = z.infer<typeof CreateConceptParams>;
 export const CreateConceptResponse = ConceptSchema;
 export type CreateConceptResponse = z.infer<typeof CreateConceptResponse>;
 
-export const GetConceptParams = PaginationParamsSchema.extend({
+export const GetConceptParams = withPaginationParams({
+  authorId: ConceptSchema.shape.authorId,
   label: z.string().optional().describe("Filter by label"),
 });
 export type GetConceptParams = z.infer<typeof GetConceptParams>;

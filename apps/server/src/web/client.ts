@@ -12,8 +12,6 @@ export const client = new Elysia()
     async (c) => {
       const authCtx = await createAuthContext(c, container);
 
-      console.log(c.request.body);
-
       const { response } = await handler.handle(c.request, {
         prefix: "/api",
         context: { auth: authCtx },

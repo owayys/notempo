@@ -1,6 +1,12 @@
 import { ConceptEntity } from "@domain/concept/concept.entity";
-import { ConceptNotFoundError } from "@domain/concept/concept.errors";
-import { ConceptRepository } from "@domain/concept/concept.repo";
+import {
+  ConceptNotFoundError,
+  ConceptValidationError,
+} from "@domain/concept/concept.errors";
+import {
+  ConceptRepository,
+  type ConceptFindFilters,
+} from "@domain/concept/concept.repo";
 import type { ConceptType } from "@domain/concept/concept.schema";
 import {
   PaginationUtils,
@@ -33,7 +39,7 @@ export class DrizzleConceptRepository extends ConceptRepository {
   }
   override async create(
     concept: ConceptEntity,
-  ): Promise<RepoResult<ConceptEntity, Error>> {
+  ): Promise<RepoResult<ConceptEntity>> {
     const encoded = concept.serialize();
 
     return await encoded
@@ -44,7 +50,7 @@ export class DrizzleConceptRepository extends ConceptRepository {
           .returning();
 
         if (!inserted) {
-          return R.Err(new Error("Failed to insert concept"));
+          return R.Err(new ConceptValidationError("Failed to insert concept"));
         }
 
         return mapper.mapOne(inserted);
@@ -71,7 +77,7 @@ export class DrizzleConceptRepository extends ConceptRepository {
   }
 
   override async findWithFilters(
-    filters: Partial<ConceptType>,
+    filters: ConceptFindFilters,
     paginationParams: PaginationParams,
   ): Promise<RepoResult<Paginated<ConceptEntity>, ConceptNotFoundError>> {
     const pagination = PaginationUtils.getDefaultPagination({

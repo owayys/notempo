@@ -25,7 +25,7 @@ export const getConceptHandler = base.getConcept.handler(async ({ input }) => {
 export const getConceptDetailsHandler = base.getConceptDetails.handler(
   async ({ input }) => {
     const conceptWorkflows = container.resolve(ConceptWorkflows);
-    const result = await conceptWorkflows.getConceptById(input.id);
+    const result = await conceptWorkflows.getConceptById(input);
 
     return handleAppResult(result);
   },

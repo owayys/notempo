@@ -1,6 +1,12 @@
 import { ThoughtEntity } from "@domain/thought/thought.entity";
-import { ThoughtNotFoundError } from "@domain/thought/thought.errors";
-import { ThoughtRepository } from "@domain/thought/thought.repo";
+import {
+  ThoughtNotFoundError,
+  ThoughtValidationError,
+} from "@domain/thought/thought.errors";
+import {
+  ThoughtRepository,
+  type ThoughtFindFilters,
+} from "@domain/thought/thought.repo";
 import type { ThoughtType } from "@domain/thought/thought.schema";
 import { enhanceEntityMapper } from "../utils/repo.utils";
 import { thoughts } from "@infra/db/models";
@@ -34,7 +40,7 @@ export class DrizzleThoughtRepository extends ThoughtRepository {
 
   override async create(
     thought: ThoughtEntity,
-  ): Promise<RepoResult<ThoughtEntity, Error>> {
+  ): Promise<RepoResult<ThoughtEntity>> {
     const encoded = thought.serialize();
 
     return await encoded
@@ -45,7 +51,7 @@ export class DrizzleThoughtRepository extends ThoughtRepository {
           .returning();
 
         if (!inserted) {
-          return R.Err(new Error("Failed to insert thought"));
+          return R.Err(new ThoughtValidationError("Failed to insert thought"));
         }
 
         return mapper.mapOne(inserted);
@@ -72,7 +78,7 @@ export class DrizzleThoughtRepository extends ThoughtRepository {
   }
 
   override async findWithFilters(
-    filters: Partial<ThoughtType>,
+    filters: ThoughtFindFilters,
     paginationParams: PaginationParams,
   ): Promise<RepoResult<Paginated<ThoughtEntity>, ThoughtNotFoundError>> {
     const pagination = PaginationUtils.getDefaultPagination({
@@ -95,7 +101,11 @@ export class DrizzleThoughtRepository extends ThoughtRepository {
         ? asc(thoughts.updatedAt)
         : desc(thoughts.updatedAt);
 
-    const conditions = [ilike(thoughts.text, `%${filters.text ?? ""}%`)];
+    const conditions = [eq(thoughts.authorId, filters.authorId)];
+
+    if (filters.text) {
+      conditions.push(ilike(thoughts.text, `%${filters.text ?? ""}%`));
+    }
 
     const where = and(...conditions);
 

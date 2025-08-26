@@ -1,9 +1,9 @@
 import { AppResult } from "@application/utils";
 import { ConceptEntity } from "@domain/concept/concept.entity";
 import {
-  ConceptCreateData,
+  CreateConceptParams,
+  GetConceptDetailsParams,
   GetConceptParams,
-  type ConceptType,
 } from "@domain/concept/concept.schema";
 import { ConceptRepository } from "@domain/concept/concept.repo";
 import { autoInjectable } from "tsyringe";
@@ -12,7 +12,7 @@ import { autoInjectable } from "tsyringe";
 export class ConceptWorkflows {
   constructor(private readonly conceptRepository: ConceptRepository) {}
 
-  async createConcept(params: ConceptCreateData) {
+  async createConcept(params: CreateConceptParams) {
     const concept = ConceptEntity.create(params);
     const result = await this.conceptRepository.create(concept);
     return AppResult.fromResult(result);
@@ -20,14 +20,14 @@ export class ConceptWorkflows {
 
   async getConcepts(params: GetConceptParams) {
     const concepts = await this.conceptRepository.findWithFilters(
-      { label: params.label },
-      params,
+      params.filters,
+      params.pagination,
     );
     return AppResult.fromResult(concepts);
   }
 
-  async getConceptById(id: ConceptType["id"]) {
-    const concept = await this.conceptRepository.findById(id);
+  async getConceptById(params: GetConceptDetailsParams) {
+    const concept = await this.conceptRepository.findById(params.id);
     return AppResult.fromResult(concept);
   }
 }

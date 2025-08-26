@@ -1,5 +1,8 @@
 import { LinkEntity } from "@domain/link/link.entity";
-import { LinkNotFoundError } from "@domain/link/link.errors";
+import {
+  LinkNotFoundError,
+  LinkValidationError,
+} from "@domain/link/link.errors";
 import { LinkRepository } from "@domain/link/link.repo";
 import type { LinkType } from "@domain/link/link.schema";
 import {
@@ -32,9 +35,7 @@ export class DrizzleLinkRepository extends LinkRepository {
   constructor(@injectDb() private readonly db: AppDatabase) {
     super();
   }
-  override async create(
-    link: LinkEntity,
-  ): Promise<RepoResult<LinkEntity, Error>> {
+  override async create(link: LinkEntity): Promise<RepoResult<LinkEntity>> {
     const encoded = link.serialize();
 
     return await encoded
@@ -45,7 +46,7 @@ export class DrizzleLinkRepository extends LinkRepository {
           .returning();
 
         if (!inserted) {
-          return R.Err(new Error("Failed to insert link"));
+          return R.Err(new LinkValidationError("Failed to insert link"));
         }
 
         return mapper.mapOne(inserted);

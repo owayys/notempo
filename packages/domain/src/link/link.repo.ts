@@ -9,18 +9,18 @@ import type {
 } from "@domain/utils";
 
 export abstract class LinkRepository {
-  abstract create(link: LinkEntity): Promise<RepoResult<LinkEntity, Error>>;
+  abstract create(link: LinkEntity): Promise<RepoResult<LinkEntity>>;
   abstract findById(
-    id: LinkType["id"]
+    id: LinkType["id"],
   ): Promise<RepoResult<LinkEntity, LinkNotFoundError>>;
   abstract findWithFilters(
     filters: Partial<LinkType>,
-    paginationParams: PaginationParams
+    paginationParams: PaginationParams,
   ): Promise<RepoResult<Paginated<LinkEntity>, LinkNotFoundError>>;
   abstract update(
-    link: LinkEntity
+    link: LinkEntity,
   ): Promise<RepoResult<LinkEntity, LinkNotFoundError>>;
   abstract delete(
-    id: LinkType["id"]
+    id: LinkType["id"],
   ): Promise<RepoUnitResult<LinkNotFoundError>>;
 }

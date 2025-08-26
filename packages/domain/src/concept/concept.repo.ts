@@ -8,21 +8,24 @@ import type {
   RepoUnitResult,
 } from "@domain/utils";
 
+export interface ConceptFindFilters {
+  authorId: ConceptType["authorId"];
+  label?: ConceptType["label"];
+}
+
 export abstract class ConceptRepository {
-  abstract create(
-    concept: ConceptEntity
-  ): Promise<RepoResult<ConceptEntity, Error>>;
+  abstract create(concept: ConceptEntity): Promise<RepoResult<ConceptEntity>>;
   abstract findById(
-    id: ConceptType["id"]
+    id: ConceptType["id"],
   ): Promise<RepoResult<ConceptEntity, ConceptNotFoundError>>;
   abstract findWithFilters(
-    filters: Partial<ConceptType>,
-    paginationParams: PaginationParams
+    filters: ConceptFindFilters,
+    paginationParams: PaginationParams,
   ): Promise<RepoResult<Paginated<ConceptEntity>, ConceptNotFoundError>>;
   abstract update(
-    concept: ConceptEntity
+    concept: ConceptEntity,
   ): Promise<RepoResult<ConceptEntity, ConceptNotFoundError>>;
   abstract delete(
-    id: ConceptType["id"]
+    id: ConceptType["id"],
   ): Promise<RepoUnitResult<ConceptNotFoundError>>;
 }

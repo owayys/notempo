@@ -9,6 +9,31 @@ export const PaginationParamsSchema = z.object({
 
 export type PaginationParams = z.infer<typeof PaginationParamsSchema>;
 
+export const withPaginationParams = <T extends z.ZodRawShape>(
+  schema: z.ZodObject<T> | T,
+) => {
+  const s = schema instanceof z.ZodObject ? schema.shape : schema;
+  const schemaObj = schema instanceof z.ZodObject ? schema : z.object(s);
+
+  return PaginationParamsSchema.extend(s).transform((data) => {
+    const filters = {} as z.infer<typeof schemaObj>;
+    const pagination = {} as PaginationParams;
+
+    for (const [key, value] of Object.entries(data)) {
+      if (key in PaginationParamsSchema.shape) {
+        pagination[key as keyof typeof pagination] = value;
+      } else {
+        filters[key as keyof typeof filters] = value;
+      }
+    }
+
+    return {
+      filters,
+      pagination,
+    };
+  });
+};
+
 export const DEFAULT_PAGE = 1;
 export const DEFAULT_LIMIT = 10;
 export const DEFAULT_SORT_ORDER = "asc" as const;
@@ -50,7 +75,7 @@ const createPaginatedResult = <T>(
   items: T[],
   totalCount: number,
   page: number,
-  limit: number
+  limit: number,
 ): Paginated<T> => {
   const totalPages = Math.ceil(totalCount / limit);
 
