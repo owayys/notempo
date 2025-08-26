@@ -1,0 +1,25 @@
+{
+  "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
+  "root": false,
+  "files": {
+    "includes": [
+      "src/**/*.{js,ts,jsx,tsx,json,css}",
+      "next.config.ts",
+      "postcss.config.mjs",
+      "package.json",
+      "tsconfig.json"
+    ]
+  },
+  "linter": {
+    "domains": {
+      "react": "recommended"
+    }
+  },
+  "javascript": {
+    "jsxRuntime": "transparent",
+    "formatter": {
+      "bracketSameLine": false
+    }
+  },
+  "extends": "//"
+}
