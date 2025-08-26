@@ -15,6 +15,7 @@
     "apps/*"
   ],
   "devDependencies": {
+    "@biomejs/biome": "2",
     "@types/bun": "latest",
     "turbo": "^2.5.6"
   },

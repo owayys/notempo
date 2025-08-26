@@ -1,0 +1,16 @@
+{
+  "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
+  "root": false,
+  "files": {
+    "includes": [
+      "./src/**/*.{js,ts,json}",
+      "./test/**/*.ts",
+      "./*.ts",
+      "package.json",
+      "tsconfig.json",
+      "drizzle.config.ts"
+    ]
+  },
+  "javascript": { "parser": { "unsafeParameterDecoratorsEnabled": true } },
+  "extends": "//"
+}
