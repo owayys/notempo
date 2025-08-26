@@ -1,5 +1,6 @@
 import { nextCookies } from "better-auth/next-js";
-import { createAuthClient, getHeaders } from "better-auth/react";
+import { createAuthClient } from "better-auth/react";
+import { headers } from "next/headers";
 
 export const authClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
@@ -20,8 +21,8 @@ const fetchSession = async (headers?: Headers) => {
 };
 
 export const getServerAuthSession = async () => {
-  const headers = await getHeaders();
-  const session = await fetchSession(headers);
+  const nextHeaders = await headers();
+  const session = await fetchSession(nextHeaders);
   return { session };
 };
 
