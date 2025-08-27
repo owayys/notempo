@@ -1,0 +1,23 @@
+type: environment
+model: environment
+id: ev_dMw9nVdfhT
+workspaceId: wk_jq2mYg8yXo
+createdAt: 2025-08-27T07:59:38.494700320
+updatedAt: 2025-08-27T08:55:05.955653192
+name: dev
+public: true
+base: false
+variables:
+- enabled: true
+  name: BASE_URL
+  value: http://localhost:8080
+  id: 3tSbGhryht
+- enabled: true
+  name: ACCESS_TOKEN
+  value: ${[ response.body.path(request='rq_BAmVwEwreq', path=b64'JC50b2tlbg', behavior='smart') ]}
+  id: UVzZkAZiRh
+- enabled: true
+  name: USER_ID
+  value: ${[ response.body.path(request='rq_BAmVwEwreq', path=b64'JC51c2VyLmlk', behavior='smart') ]}
+  id: AbEQwymnmG
+color: '#db8644'
