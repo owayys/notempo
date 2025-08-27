@@ -1,0 +1,15 @@
+type: workspace
+model: workspace
+id: wk_jq2mYg8yXo
+createdAt: 2025-08-27T07:56:59.427065711
+updatedAt: 2025-08-27T08:02:38.377139310
+authentication:
+  token: ${[ ACCESS_TOKEN ]}
+authenticationType: bearer
+description: ''
+headers: []
+name: notempo
+encryptionKeyChallenge: null
+settingValidateCertificates: true
+settingFollowRedirects: true
+settingRequestTimeout: 0

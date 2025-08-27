@@ -1,0 +1,29 @@
+type: http_request
+model: http_request
+id: rq_FEhYkc3wfU
+createdAt: 2025-08-27T08:49:37.598931767
+updatedAt: 2025-08-27T08:50:58.111293046
+workspaceId: wk_jq2mYg8yXo
+folderId: fl_JHgud2Xppy
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "text": "Could be so",
+      "concepts": [
+        "a5f54271-26a1-42d0-90b7-6ac3180d28a1"
+      ]
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: NbuUaKNAJ5
+method: POST
+name: create
+sortPriority: -0.00030000000000000003
+url: ${[ BASE_URL ]}/api/thought
+urlParameters: []

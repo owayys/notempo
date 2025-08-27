@@ -1,0 +1,28 @@
+type: http_request
+model: http_request
+id: rq_7DeC5JesuH
+createdAt: 2025-08-27T08:00:50.571805484
+updatedAt: 2025-08-27T08:01:08.400998179
+workspaceId: wk_jq2mYg8yXo
+folderId: fl_CcwysBeEjV
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "email": "some@one.else",
+      "name": "someone else",
+      "password": "password"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: fkUBt6GcjY
+method: POST
+name: sign-out
+sortPriority: -0.0001
+url: ${[ BASE_URL ]}/auth/sign-up/email
+urlParameters: []

@@ -1,0 +1,30 @@
+type: http_request
+model: http_request
+id: rq_Wp2xhTCpeb
+createdAt: 2025-08-27T08:05:32.641424689
+updatedAt: 2025-08-27T08:45:49.070639695
+workspaceId: wk_jq2mYg8yXo
+folderId: fl_YgcDJVnwRK
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "label": "Quantum Neuroscience"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: DMYfYU6Bsr
+method: POST
+name: create
+sortPriority: 0.0008
+url: ${[ BASE_URL ]}/api/concept
+urlParameters:
+- enabled: true
+  name: ''
+  value: ''
+  id: pGeaEkKfwR
