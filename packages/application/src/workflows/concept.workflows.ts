@@ -1,10 +1,10 @@
 import { AppResult } from "@application/utils";
 import { ConceptEntity } from "@domain/concept/concept.entity";
 import { ConceptRepository } from "@domain/concept/concept.repo";
-import {
-  CreateConceptParams,
-  GetConceptDetailsParams,
-  GetConceptParams,
+import type {
+  CreateConceptData,
+  GetConceptData,
+  GetConceptDetailsData,
 } from "@domain/concept/concept.schema";
 import { autoInjectable } from "tsyringe";
 
@@ -12,22 +12,25 @@ import { autoInjectable } from "tsyringe";
 export class ConceptWorkflows {
   constructor(private readonly conceptRepository: ConceptRepository) {}
 
-  async createConcept(params: CreateConceptParams) {
+  async createConcept(params: CreateConceptData) {
     const concept = ConceptEntity.create(params);
     const result = await this.conceptRepository.create(concept);
     return AppResult.fromResult(result);
   }
 
-  async getConcepts(params: GetConceptParams) {
+  async getConcepts(params: GetConceptData) {
     const concepts = await this.conceptRepository.findWithFilters(
-      params.filters,
+      { ...params.filters, authorId: params.authorId },
       params.pagination,
     );
     return AppResult.fromResult(concepts);
   }
 
-  async getConceptById(params: GetConceptDetailsParams) {
-    const concept = await this.conceptRepository.findById(params.id);
+  async getConceptById(params: GetConceptDetailsData) {
+    const concept = await this.conceptRepository.findById(
+      params.id,
+      params.authorId,
+    );
     return AppResult.fromResult(concept);
   }
 }

@@ -17,6 +17,7 @@ export abstract class ThoughtRepository {
   abstract create(thought: ThoughtEntity): Promise<RepoResult<ThoughtEntity>>;
   abstract findById(
     id: ThoughtType["id"],
+    authorId: ThoughtType["authorId"],
   ): Promise<RepoResult<ThoughtEntity, ThoughtNotFoundError>>;
   abstract findWithFilters(
     filters: ThoughtFindFilters,
@@ -24,8 +25,10 @@ export abstract class ThoughtRepository {
   ): Promise<RepoResult<Paginated<ThoughtEntity>, ThoughtNotFoundError>>;
   abstract update(
     thought: ThoughtEntity,
+    authorId: ThoughtType["authorId"],
   ): Promise<RepoResult<ThoughtEntity, ThoughtNotFoundError>>;
   abstract delete(
     id: ThoughtType["id"],
+    authorId: ThoughtType["authorId"],
   ): Promise<RepoUnitResult<ThoughtNotFoundError>>;
 }

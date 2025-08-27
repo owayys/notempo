@@ -17,6 +17,7 @@ export abstract class ConceptRepository {
   abstract create(concept: ConceptEntity): Promise<RepoResult<ConceptEntity>>;
   abstract findById(
     id: ConceptType["id"],
+    authorId: ConceptType["authorId"],
   ): Promise<RepoResult<ConceptEntity, ConceptNotFoundError>>;
   abstract findWithFilters(
     filters: ConceptFindFilters,
@@ -27,5 +28,6 @@ export abstract class ConceptRepository {
   ): Promise<RepoResult<ConceptEntity, ConceptNotFoundError>>;
   abstract delete(
     id: ConceptType["id"],
+    authorId: ConceptType["authorId"],
   ): Promise<RepoUnitResult<ConceptNotFoundError>>;
 }

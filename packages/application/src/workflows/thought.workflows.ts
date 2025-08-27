@@ -4,10 +4,10 @@ import { LinkEntity } from "@domain/link/link.entity";
 import { LinkRepository } from "@domain/link/link.repo";
 import { ThoughtEntity } from "@domain/thought/thought.entity";
 import { ThoughtRepository } from "@domain/thought/thought.repo";
-import {
-  CreateThoughtParams,
-  GetThoughtDetailsParams,
-  GetThoughtParams,
+import type {
+  CreateThoughtData,
+  GetThoughtData,
+  GetThoughtDetailsData,
 } from "@domain/thought/thought.schema";
 import { validationErrorsToSingle } from "@domain/utils/validation.utils";
 import { autoInjectable } from "tsyringe";
@@ -19,7 +19,7 @@ export class ThoughtWorkflows {
     private readonly linkRepository: LinkRepository,
   ) {}
 
-  async createThought(params: CreateThoughtParams) {
+  async createThought(params: CreateThoughtData) {
     const thought = ThoughtEntity.create(params);
     const links = params.concepts.map((cId) =>
       LinkEntity.create({
@@ -45,16 +45,22 @@ export class ThoughtWorkflows {
     return AppResult.fromResult(result);
   }
 
-  async getThoughts(params: GetThoughtParams) {
+  async getThoughts(params: GetThoughtData) {
     const result = await this.thoughtRepository.findWithFilters(
-      params.filters,
+      {
+        ...params.filters,
+        authorId: params.authorId,
+      },
       params.pagination,
     );
     return AppResult.fromResult(result);
   }
 
-  async getThoughtById(params: GetThoughtDetailsParams) {
-    const result = await this.thoughtRepository.findById(params.id);
+  async getThoughtById(params: GetThoughtDetailsData) {
+    const result = await this.thoughtRepository.findById(
+      params.id,
+      params.authorId,
+    );
     return AppResult.fromResult(result);
   }
 }

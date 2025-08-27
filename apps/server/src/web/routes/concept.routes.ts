@@ -6,25 +6,36 @@ import { authenticated } from "../utils/orpc.utils";
 const base = authenticated.concept;
 
 export const createConceptHandler = base.createConcept.handler(
-  async ({ input }) => {
+  async ({ input, context }) => {
     const conceptWorkflows = container.resolve(ConceptWorkflows);
-    const result = await conceptWorkflows.createConcept(input);
+    const result = await conceptWorkflows.createConcept({
+      ...input,
+      authorId: context.user.id,
+    });
 
     return handleAppResult(result);
   },
 );
 
-export const getConceptHandler = base.getConcept.handler(async ({ input }) => {
-  const conceptWorkflows = container.resolve(ConceptWorkflows);
-  const result = await conceptWorkflows.getConcepts(input);
+export const getConceptHandler = base.getConcept.handler(
+  async ({ input, context }) => {
+    const conceptWorkflows = container.resolve(ConceptWorkflows);
+    const result = await conceptWorkflows.getConcepts({
+      ...input,
+      authorId: context.user.id,
+    });
 
-  return handleAppResult(result);
-});
+    return handleAppResult(result);
+  },
+);
 
 export const getConceptDetailsHandler = base.getConceptDetails.handler(
-  async ({ input }) => {
+  async ({ input, context }) => {
     const conceptWorkflows = container.resolve(ConceptWorkflows);
-    const result = await conceptWorkflows.getConceptById(input);
+    const result = await conceptWorkflows.getConceptById({
+      ...input,
+      authorId: context.user.id,
+    });
 
     return handleAppResult(result);
   },

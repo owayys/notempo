@@ -61,10 +61,11 @@ export class DrizzleThoughtRepository extends ThoughtRepository {
 
   override async findById(
     id: ThoughtType["id"],
+    authorId: ThoughtType["authorId"],
   ): Promise<RepoResult<ThoughtEntity, ThoughtNotFoundError>> {
     try {
       const row = await this.db.query.thoughts.findFirst({
-        where: eq(thoughts.id, id),
+        where: and(eq(thoughts.id, id), eq(thoughts.authorId, authorId)),
       });
 
       if (!row) {
@@ -98,8 +99,8 @@ export class DrizzleThoughtRepository extends ThoughtRepository {
           ? asc(thoughts.text)
           : desc(thoughts.text)
         : pagination.sortOrder === "asc"
-          ? asc(thoughts.updatedAt)
-          : desc(thoughts.updatedAt);
+        ? asc(thoughts.updatedAt)
+        : desc(thoughts.updatedAt);
 
     const conditions = [eq(thoughts.authorId, filters.authorId)];
 
@@ -160,11 +161,12 @@ export class DrizzleThoughtRepository extends ThoughtRepository {
 
   override async delete(
     id: ThoughtType["id"],
+    authorId: ThoughtType["authorId"],
   ): Promise<RepoUnitResult<ThoughtNotFoundError>> {
     try {
       const [deleted] = await this.db
         .delete(thoughts)
-        .where(eq(thoughts.id, id))
+        .where(and(eq(thoughts.id, id), eq(thoughts.authorId, authorId)))
         .returning();
 
       if (!deleted) {

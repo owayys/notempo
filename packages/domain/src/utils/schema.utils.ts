@@ -1,7 +1,12 @@
 import { Result } from "@carbonteq/fp";
+import type { UserType } from "@domain/user/user.schema";
 import { type ValidationError } from "@domain/utils/base.errors";
 import { zodErrorToValidationError } from "@domain/utils/validation.utils";
 import z from "zod";
+
+export type WithUser<T, K extends string = "authorId"> = T & {
+  [P in K]: UserType["id"];
+};
 
 export const createValidator = <T>(schema: z.ZodSchema<T>) => {
   return (data: unknown): Result<T, ValidationError> => {

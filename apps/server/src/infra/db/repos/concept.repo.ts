@@ -60,10 +60,11 @@ export class DrizzleConceptRepository extends ConceptRepository {
 
   override async findById(
     id: ConceptType["id"],
+    authorId: ConceptType["authorId"],
   ): Promise<RepoResult<ConceptEntity, ConceptNotFoundError>> {
     try {
       const row = await this.db.query.concepts.findFirst({
-        where: eq(concepts.id, id),
+        where: and(eq(concepts.id, id), eq(concepts.authorId, authorId)),
       });
 
       if (!row) {
@@ -97,8 +98,8 @@ export class DrizzleConceptRepository extends ConceptRepository {
           ? asc(concepts.label)
           : desc(concepts.label)
         : pagination.sortOrder === "asc"
-          ? asc(concepts.updatedAt)
-          : desc(concepts.updatedAt);
+        ? asc(concepts.updatedAt)
+        : desc(concepts.updatedAt);
 
     const conditions = [ilike(concepts.label, `%${filters.label ?? ""}%`)];
 
@@ -155,11 +156,12 @@ export class DrizzleConceptRepository extends ConceptRepository {
 
   override async delete(
     id: ConceptType["id"],
+    authorId: ConceptType["authorId"],
   ): Promise<RepoUnitResult<ConceptNotFoundError>> {
     try {
       const [deleted] = await this.db
         .delete(concepts)
-        .where(eq(concepts.id, id))
+        .where(and(eq(concepts.id, id), eq(concepts.authorId, authorId)))
         .returning();
 
       if (!deleted) {

@@ -1,8 +1,9 @@
-import { UserSchema } from "@domain/user/user.schema";
+import { UserSchema, type UserType } from "@domain/user/user.schema";
 import {
   defineEntitySchema,
   PaginatedResultSchema,
   removeBaseFields,
+  type WithUser,
   withPaginationParams,
 } from "@domain/utils";
 import z from "zod";
@@ -17,17 +18,18 @@ export type ConceptEncoded = z.input<typeof ConceptSchema>;
 export const ConceptCreateData = removeBaseFields(ConceptSchema);
 export type ConceptCreateData = z.infer<typeof ConceptCreateData>;
 
-export const CreateConceptParams = ConceptCreateData;
+export const CreateConceptParams = ConceptCreateData.omit({ authorId: true });
 export type CreateConceptParams = z.infer<typeof CreateConceptParams>;
+export type CreateConceptData = WithUser<CreateConceptParams>;
 
 export const CreateConceptResponse = ConceptSchema;
 export type CreateConceptResponse = z.infer<typeof CreateConceptResponse>;
 
 export const GetConceptParams = withPaginationParams({
-  authorId: ConceptSchema.shape.authorId,
   label: z.string().optional().describe("Filter by label"),
 });
 export type GetConceptParams = z.infer<typeof GetConceptParams>;
+export type GetConceptData = WithUser<GetConceptParams>;
 
 export const GetConceptResponse = PaginatedResultSchema(ConceptSchema);
 export type GetConceptResponse = z.infer<typeof GetConceptResponse>;
@@ -36,6 +38,7 @@ export const GetConceptDetailsParams = z.object({
   id: ConceptSchema.id,
 });
 export type GetConceptDetailsParams = z.infer<typeof GetConceptDetailsParams>;
+export type GetConceptDetailsData = WithUser<GetConceptDetailsParams>;
 
 export const GetConceptDetailsResponse = ConceptSchema;
 export type GetConceptDetailsResponse = z.infer<
