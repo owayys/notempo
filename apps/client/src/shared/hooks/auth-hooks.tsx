@@ -4,7 +4,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { authClient, getServerAuthSession } from "@/shared/auth-client";
+import { authClient, getAuthSession } from "@/shared/auth-client";
 import { toast } from "@/shared/toast";
 
 const SESSION_KEY = ["auth", "session"] as const;
@@ -21,7 +21,7 @@ export const useInvalidateSession = () => {
 const getSessionOpts = () => ({
   queryKey: SESSION_KEY,
   queryFn: async () => {
-    const res = await getServerAuthSession();
+    const res = await getAuthSession();
 
     return res.session || null;
   },
@@ -42,7 +42,7 @@ type LoginData = {
 };
 
 type RegisterData = {
-  name: string;
+  username: string;
   email: string;
   password: string;
 };
@@ -82,7 +82,7 @@ export const useRegisterMutation = () => {
   return useMutation({
     mutationFn: async (data: RegisterData) => {
       const res = await authClient.signUp.email({
-        name: data.name,
+        name: data.username,
         email: data.email,
         password: data.password,
       });

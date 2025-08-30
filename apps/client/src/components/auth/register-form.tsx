@@ -19,35 +19,39 @@ import {
   Input,
   Typography,
 } from "@/components/ui";
-import { useLoginMutation } from "@/shared/hooks/auth-hooks";
+import { useRegisterMutation } from "@/shared/hooks/auth-hooks";
 
-type LoginFormProps = {
-  onLoginSuccess: () => Promise<void>;
+type RegisterFormProps = {
+  onRegisterSuccess: () => Promise<void>;
 };
 
-const loginFormSchema = z.object({
+const registerFormSchema = z.object({
+  username: z
+    .string()
+    .min(2, { message: "Username must be at least 2 characters" }),
   email: z.email(),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters" }),
 });
 
-export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
-  const loginMut = useLoginMutation();
+export const RegisterForm = ({ onRegisterSuccess }: RegisterFormProps) => {
+  const registerMut = useRegisterMutation();
 
-  const form = useForm<z.infer<typeof loginFormSchema>>({
-    resolver: zodResolver(loginFormSchema),
+  const form = useForm<z.infer<typeof registerFormSchema>>({
+    resolver: zodResolver(registerFormSchema),
     defaultValues: {
+      username: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
-    await loginMut.mutateAsync(values, {
+  const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
+    await registerMut.mutateAsync(values, {
       onSuccess: async (data) => {
         if (data.data) {
-          await onLoginSuccess();
+          await onRegisterSuccess();
         }
       },
     });
@@ -55,10 +59,23 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
 
   return (
     <Card className="md:w-1/4">
-      <CardHeader className="text-center">Login to notempo</CardHeader>
+      <CardHeader className="text-center">Register for notempo</CardHeader>
       <CardContent>
         <Form {...form}>
           <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Username" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
@@ -86,15 +103,15 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
               )}
             />
             <Button className="w-full" type="submit">
-              Login
+              Register
             </Button>
           </form>
         </Form>
       </CardContent>
       <CardDescription className="w-full text-center">
-        <Typography>Dont have an account yet?</Typography>
-        <Link href={"/auth/register"}>
-          <Typography variant="link">Register</Typography>
+        <Typography>Have an account?</Typography>
+        <Link href={"/auth/login"}>
+          <Typography variant="link">Login</Typography>
         </Link>
       </CardDescription>
     </Card>

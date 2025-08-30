@@ -3,5 +3,8 @@ export * from "./card";
 export * from "./form";
 export * from "./input";
 export * from "./label";
+export * from "./layout";
+export * from "./separator";
 export * from "./sonner";
 export * from "./textarea";
+export * from "./typography";
