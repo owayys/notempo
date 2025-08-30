@@ -1,4 +1,4 @@
-import { UserSchema, type UserType } from "@domain/user/user.schema";
+import { UserSchema } from "@domain/user/user.schema";
 import {
   defineEntitySchema,
   PaginatedResultSchema,
