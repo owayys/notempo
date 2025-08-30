@@ -1,5 +1,6 @@
 import "reflect-metadata";
 
+import { cors } from "@elysiajs/cors";
 import { config } from "@infra/config";
 import { wireDI } from "@infra/di";
 import { Elysia } from "elysia";
@@ -11,6 +12,7 @@ import { addRpcHandler } from "./utils/rpc.handler";
 wireDI(container);
 
 export const client = new Elysia()
+  .use(cors())
   .get("/", () => "Hello Elysia!")
   .get("/health", () => ({
     status: "ok",
