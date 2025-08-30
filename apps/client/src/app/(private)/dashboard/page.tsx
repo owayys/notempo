@@ -1,5 +1,7 @@
+import { DashboardPage } from "@/pages/dashboard/dashboard-page";
+
 const Dashboard = () => {
-  return "Dashboard";
+  return <DashboardPage />;
 };
 
 export default Dashboard;

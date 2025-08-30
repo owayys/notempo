@@ -1,12 +1,8 @@
-import { VStack } from "@/components/ui/layout";
 import React from "react";
+import { VStack } from "@/components/ui/layout";
 
 const PublicLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <VStack className="w-screen h-screen justify-center items-center">
-      {children}
-    </VStack>
-  );
+  return <VStack>{children}</VStack>;
 };
 
 export default PublicLayout;
