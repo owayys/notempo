@@ -1,16 +1,12 @@
+import { ChevronRight } from "lucide-react";
 import { NewThought } from "@/components/thought/new-thought";
-import { HStack, Typography, VStack } from "@/components/ui";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Button, Separator } from "@/components/ui";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -19,13 +15,24 @@ import {
 export const ConceptsSection = () => {
   return (
     <Sidebar>
+      <SidebarHeader>
+        <NewThought />
+      </SidebarHeader>
+      <Separator />
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton>Yo</SidebarMenuButton>
+                <SidebarMenuButton asChild>
+                  <Button
+                    className="justify-start hover:bg-transparent active:bg-transparent"
+                    variant="link"
+                  >
+                    <ChevronRight />
+                    Yo
+                  </Button>
+                </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>

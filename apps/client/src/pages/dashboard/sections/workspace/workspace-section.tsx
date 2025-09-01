@@ -1,17 +1,18 @@
-import { HStack, Typography, VStack } from "@/components/ui";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Box, HStack, VStack } from "@/components/ui";
 import { WorkSpaceEditor } from "@/components/workspace/workspace-editor";
 
 export const WorkspaceSection = () => {
   return (
-    <VStack className="h-screen w-full items-center justify-center">
-      <HStack className="w-full p-2">
-        <SidebarTrigger />
-        <HStack className="w-full justify-center text-center">
-          <Typography variant="muted">Current Concept</Typography>
+    <VStack className="h-full w-full items-center justify-center overflow-y-scroll">
+      <VStack className="h-full w-4/5 max-w-[800px] gap-4 pt-12 m-auto">
+        <HStack className="w-full p-6 border border-accent-foreground">
+          TITLE
         </HStack>
-      </HStack>
-      <WorkSpaceEditor />
+        <Box className="w-full p-6 py-12 border border-accent-foreground">
+          META
+        </Box>
+        <WorkSpaceEditor />
+      </VStack>
     </VStack>
   );
 };
