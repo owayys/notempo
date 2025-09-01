@@ -1,5 +1,5 @@
 import { Box, HStack, VStack } from "@/components/ui";
-import { WorkSpaceEditor } from "@/components/workspace/workspace-editor";
+import { ConceptHistory } from "../concepts/concept-history";
 
 export const WorkspaceSection = () => {
   return (
@@ -11,7 +11,7 @@ export const WorkspaceSection = () => {
         <Box className="w-full p-6 py-12 border border-accent-foreground">
           META
         </Box>
-        <WorkSpaceEditor />
+        <ConceptHistory />
       </VStack>
     </VStack>
   );
