@@ -17,7 +17,7 @@ export const NewThought = () => {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline">
+          <Button variant="link">
             <SquarePen />
           </Button>
         </DialogTrigger>
