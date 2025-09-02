@@ -2,7 +2,7 @@ import { ConceptType } from "@domain/concept/concept.schema";
 import { Separator, VStack } from "@/components/ui";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { DashboardHeader } from "./dashboard-header";
-import { ConceptsSection } from "./sections/concepts/concepts-section";
+import { ConceptsSidebar } from "./sections/concepts/concepts-sidebar";
 import { WorkspaceSection } from "./sections/workspace/workspace-section";
 
 const concepts = [
@@ -81,7 +81,7 @@ const concepts = [
 export const DashboardPage = () => {
   return (
     <SidebarProvider>
-      <ConceptsSection concepts={concepts} />
+      <ConceptsSidebar concepts={concepts} />
       <VStack className="w-full h-screen">
         <DashboardHeader />
         <Separator />

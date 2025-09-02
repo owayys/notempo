@@ -21,11 +21,11 @@ import {
 } from "@/components/ui/sidebar";
 import { thoughts } from "./concept-history";
 
-interface ConceptsSectionProps {
+interface ConceptsSidebarProps {
   concepts: ConceptType[];
 }
 
-export const ConceptsSection = ({ concepts }: ConceptsSectionProps) => {
+export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
   return (
     <Sidebar className="flex flex-col h-full">
       <SidebarHeader className="flex-shrink-0">
