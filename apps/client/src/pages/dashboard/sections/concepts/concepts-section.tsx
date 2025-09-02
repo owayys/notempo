@@ -33,7 +33,7 @@ export const ConceptsSection = ({ concepts }: ConceptsSectionProps) => {
       </SidebarHeader>
       <Separator className="flex-shrink-0" />
       <ScrollArea className="flex-1 w-full overflow-hidden">
-        <SidebarContent className="flex gap-0 mt-2 w-full">
+        <SidebarContent className="flex gap-0 mt-2 w-full select-none">
           {concepts.map((c) => (
             <Collapsible
               className="group/collapsible w-full"
@@ -43,7 +43,7 @@ export const ConceptsSection = ({ concepts }: ConceptsSectionProps) => {
               <SidebarGroup className="p-0 w-full">
                 <SidebarGroupLabel
                   asChild
-                  className="group/label max-w-62  text-primary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm w-full"
+                  className="group/label max-w-62 text-primary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm w-full"
                 >
                   <CollapsibleTrigger asChild>
                     <Button
