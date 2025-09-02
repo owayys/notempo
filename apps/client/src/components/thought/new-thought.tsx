@@ -1,4 +1,7 @@
+"use client";
+
 import { SquarePen } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,8 +16,30 @@ import {
 import { ThoughtEditor } from "./thought-editor";
 
 export const NewThought = () => {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        event.shiftKey &&
+        event.key === "T"
+      ) {
+        event.preventDefault();
+        setOpen(true);
+      }
+
+      if (event.key === "Escape" && open) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
+
   return (
-    <Dialog>
+    <Dialog onOpenChange={setOpen} open={open}>
       <form>
         <DialogTrigger asChild>
           <Button variant="link">

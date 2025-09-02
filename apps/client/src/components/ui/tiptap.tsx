@@ -20,6 +20,7 @@ const Tiptap = ({ content, className }: EditorProps) => {
           "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none h-full min-h-full",
       },
     },
+    autofocus: true,
   });
 
   return (
