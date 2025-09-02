@@ -2,7 +2,7 @@ import { ThoughtType } from "@domain/thought/thought.schema";
 import { VStack } from "@/components/ui";
 import { ThoughtTimeline } from "../thoughts/thought-timeline";
 
-const thoughts = [
+export const thoughts = [
   {
     id: "550e8400-e29b-41d4-a716-446655440001",
     createdAt: new Date("2025-08-28T09:15:30Z"),

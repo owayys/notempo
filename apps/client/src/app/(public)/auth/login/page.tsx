@@ -1,7 +1,7 @@
 "use client";
 
-import { LoginPage } from "@/pages/auth/login-page";
 import { useRouter, useSearchParams } from "next/navigation";
+import { LoginPage } from "@/pages/auth/login-page";
 
 const Login = () => {
   const router = useRouter();
