@@ -150,3 +150,12 @@
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
+
+.tiptap p.is-editor-empty:first-child::before {
+  float: left;
+  height: 0;
+  color: var(--color-muted-foreground);
+  pointer-events: none;
+  content: attr(data-placeholder);
+  opacity: 0.7;
+}
