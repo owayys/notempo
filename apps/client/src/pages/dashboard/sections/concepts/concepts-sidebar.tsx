@@ -27,7 +27,7 @@ interface ConceptsSidebarProps {
 
 export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
   return (
-    <Sidebar className="flex flex-col h-full">
+    <Sidebar className="flex flex-col h-full w-1/6">
       <SidebarHeader className="flex-shrink-0">
         <NewThought />
       </SidebarHeader>
@@ -43,17 +43,18 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
               <SidebarGroup className="p-0 w-full">
                 <SidebarGroupLabel
                   asChild
-                  className="group/label max-w-62 text-primary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm w-full"
+                  className="group/label max-w-60 mx-auto text-primary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm w-full"
                 >
                   <CollapsibleTrigger asChild>
                     <Button
-                      className="justify-start hover:bg-transparent active:bg-transparent p-0 w-full min-w-0"
-                      variant="link"
+                      className="justify-start p-0 w-full min-w-0"
+                      variant="ghost"
                     >
                       <ChevronRight className="transition-transform group-data-[state=open]/collapsible:rotate-90 flex-shrink-0" />
                       <Typography
                         className="truncate block w-full text-start min-w-0"
                         title={c.label}
+                        variant="muted"
                       >
                         {c.label}
                       </Typography>
@@ -71,7 +72,7 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
                           >
                             <Box className="w-full min-w-0 pl-9">
                               <Typography
-                                className="truncate block w-full group-hover/thought:text-foreground transition-all duration-100 group-active/thought:text-accent-foreground min-w-0"
+                                className="truncate block w-full group-hover/thought:text-primary transition-all duration-100 min-w-0"
                                 title={t.text}
                                 variant="muted"
                               >
