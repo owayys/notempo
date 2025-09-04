@@ -1,10 +1,11 @@
 import { Box, HStack, VStack } from "@/components/ui";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { ConceptHistory } from "../concepts/concept-history";
 
 export const WorkspaceSection = () => {
   return (
-    <VStack className="h-full w-full items-center justify-center overflow-y-scroll">
-      <VStack className="h-full w-4/5 max-w-[800px] gap-4 pt-12 m-auto">
+    <ScrollArea className="h-full w-full items-center justify-center overflow-x-hidden">
+      <VStack className="h-full w-4/5 max-w-[900px] gap-4 pt-12 m-auto">
         <HStack className="w-full p-6 border border-accent-foreground">
           TITLE
         </HStack>
@@ -13,6 +14,6 @@ export const WorkspaceSection = () => {
         </Box>
         <ConceptHistory />
       </VStack>
-    </VStack>
+    </ScrollArea>
   );
 };
