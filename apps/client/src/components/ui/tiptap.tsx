@@ -9,6 +9,8 @@ interface EditorProps {
   className?: string;
   autofocus?: boolean;
   placeholder?: string;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 const Tiptap = ({
@@ -16,6 +18,8 @@ const Tiptap = ({
   className,
   placeholder = "Write something...",
   autofocus = false,
+  onFocus,
+  onBlur,
 }: EditorProps) => {
   const editor = useEditor({
     extensions: [
@@ -43,6 +47,8 @@ const Tiptap = ({
         className,
       )}
       editor={editor}
+      onBlur={onBlur}
+      onFocus={onFocus}
     />
   );
 };
