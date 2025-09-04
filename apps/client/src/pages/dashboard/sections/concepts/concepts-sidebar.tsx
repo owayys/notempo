@@ -43,7 +43,7 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
               <SidebarGroup className="p-0 w-full">
                 <SidebarGroupLabel
                   asChild
-                  className="group/label max-w-60 overflow-hidden mx-auto text-primary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm w-full"
+                  className="group/label max-w-68 md:max-w-60 overflow-hidden mx-auto text-primary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm w-full"
                 >
                   <CollapsibleTrigger asChild>
                     <Button
@@ -75,10 +75,10 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
                         <SidebarMenuItem key={t.id}>
                           <SidebarMenuButton
                             asChild
-                            className="w-full max-w-62 group/thought hover:bg-transparent cursor-pointer active:bg-transparent"
+                            className="w-full max-w-70 md:max-w-62 group/thought hover:bg-transparent cursor-pointer active:bg-transparent"
                           >
                             <Box className="w-full min-w-0 pl-12">
-                              <Box className="absolute left-7 top-0 bottom-0 w-px h-2/3 my-auto bg-primary" />
+                              <Box className="absolute left-7 top-0 bottom-0 w-px h-2/3 my-auto bg-muted-foreground opacity-50 group-hover/thought:bg-accent-foreground group-hover/thought:w-0.5 transition-all duration-100" />
                               <Typography
                                 className="truncate block w-full group-hover/thought:text-primary transition-all duration-100 min-w-0 bg-gradient-to-r from-current to-transparent bg-clip-text"
                                 style={{
