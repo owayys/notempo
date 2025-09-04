@@ -27,7 +27,7 @@ interface ConceptsSidebarProps {
 
 export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
   return (
-    <Sidebar className="flex flex-col h-full w-1/6">
+    <Sidebar className="flex flex-col h-full">
       <SidebarHeader className="flex-shrink-0">
         <NewThought />
       </SidebarHeader>
@@ -43,7 +43,7 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
               <SidebarGroup className="p-0 w-full">
                 <SidebarGroupLabel
                   asChild
-                  className="group/label max-w-60 mx-auto text-primary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm w-full"
+                  className="group/label max-w-60 overflow-hidden mx-auto text-primary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm w-full"
                 >
                   <CollapsibleTrigger asChild>
                     <Button
@@ -52,7 +52,14 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
                     >
                       <ChevronRight className="transition-transform group-data-[state=open]/collapsible:rotate-90 flex-shrink-0" />
                       <Typography
-                        className="truncate block w-full text-start min-w-0"
+                        className="block w-full text-start min-w-0"
+                        style={{
+                          background:
+                            "linear-gradient(to right, currentColor 90%, transparent 100%)",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          backgroundClip: "text",
+                        }}
                         title={c.label}
                         variant="muted"
                       >
@@ -70,9 +77,17 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
                             asChild
                             className="w-full max-w-62 group/thought hover:bg-transparent cursor-pointer active:bg-transparent"
                           >
-                            <Box className="w-full min-w-0 pl-9">
+                            <Box className="w-full min-w-0 pl-12">
+                              <Box className="absolute left-7 top-0 bottom-0 w-px h-2/3 my-auto bg-primary" />
                               <Typography
-                                className="truncate block w-full group-hover/thought:text-primary transition-all duration-100 min-w-0"
+                                className="truncate block w-full group-hover/thought:text-primary transition-all duration-100 min-w-0 bg-gradient-to-r from-current to-transparent bg-clip-text"
+                                style={{
+                                  background:
+                                    "linear-gradient(to right, currentColor 90%, transparent 100%)",
+                                  WebkitBackgroundClip: "text",
+                                  WebkitTextFillColor: "transparent",
+                                  backgroundClip: "text",
+                                }}
                                 title={t.text}
                                 variant="muted"
                               >
