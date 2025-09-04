@@ -21,7 +21,7 @@ export const NewThought = () => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
-        (event.ctrlKey || event.metaKey) &&
+        (event.altKey || event.metaKey) &&
         event.shiftKey &&
         event.key === "T"
       ) {
