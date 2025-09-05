@@ -1,7 +1,14 @@
 "use client";
-import { Placeholder } from "@tiptap/extensions";
-import { EditorContent, EditorOptions, useEditor } from "@tiptap/react";
+import { CharacterCount, Placeholder } from "@tiptap/extensions";
+import {
+  EditorContent,
+  EditorOptions,
+  useEditor,
+  useEditorState,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { Box } from "@/components/ui/layout";
+import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { SmartBraces } from "@/shared/utils/tiptap-extensions";
 
@@ -12,7 +19,10 @@ interface EditorProps {
   placeholder?: string;
   onFocus?: () => void;
   onBlur?: () => void;
+  showCharCount?: boolean;
 }
+
+const CHARACTER_LIMIT = 512;
 
 const Tiptap = ({
   content,
@@ -21,12 +31,17 @@ const Tiptap = ({
   autofocus = false,
   onFocus,
   onBlur,
+  showCharCount = false,
 }: EditorProps) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
       Placeholder.configure({
         placeholder,
+      }),
+      CharacterCount.configure({
+        limit: CHARACTER_LIMIT,
+        mode: "textSize",
       }),
       SmartBraces,
     ],
@@ -42,16 +57,38 @@ const Tiptap = ({
     autofocus,
   });
 
+  const editorState = useEditorState({
+    editor,
+    selector: (context) => ({
+      charCount: context.editor?.storage.characterCount.characters(),
+    }),
+  });
+
+  const remainingChars = CHARACTER_LIMIT - (editorState?.charCount ?? 0);
+
   return (
-    <EditorContent
-      className={cn(
-        "h-full [&_.ProseMirror]:h-full [&_.ProseMirror]:min-h-full",
-        className,
-      )}
-      editor={editor}
-      onBlur={onBlur}
-      onFocus={onFocus}
-    />
+    <Box className={cn("h-full relative", className)}>
+      <EditorContent
+        className="h-full [&_.ProseMirror]:h-full [&_.ProseMirror]:min-h-full"
+        editor={editor}
+        onBlur={onBlur}
+        onFocus={onFocus}
+      />
+      <Typography
+        className={`${
+          !showCharCount && "hidden"
+        } absolute -bottom-3 right-0 transition-all duration-200 pointer-events-none px-3 py-2 ${
+          remainingChars < 50
+            ? "text-destructive text-base"
+            : remainingChars < 100
+            ? "text-amber-500 text-sm"
+            : "text-primary text-xs"
+        }`}
+        variant="muted"
+      >
+        {remainingChars}
+      </Typography>
+    </Box>
   );
 };
 

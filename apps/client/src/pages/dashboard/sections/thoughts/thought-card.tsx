@@ -14,9 +14,9 @@ export const ThoughtCard = ({ thought }: ThoughtCardProps) => {
   const [isEditorActive, setIsEditorActive] = useState(false);
 
   return (
-    <HStack className="w-full relative max-w-full overflow-hidden group transition-all duration-200">
+    <HStack className="w-full relative max-w-full overflow-hidden group transition-all duration-300">
       <Tiptap
-        className={`text-muted-foreground group-hover:text-foreground block pr-5 max-w-full whitespace-normal overflow-hidden group-hover:max-h-screen transition-all duration-200 ${
+        className={`text-muted-foreground group-hover:text-foreground block pr-5 max-w-full whitespace-normal overflow-hidden group-hover:max-h-screen transition-all duration-300 ${
           isEditorActive
             ? "max-h-screen text-foreground border-l border-accent-foreground p-4 text-lg"
             : "max-h-6"
@@ -24,6 +24,7 @@ export const ThoughtCard = ({ thought }: ThoughtCardProps) => {
         content={thought.text}
         onBlur={() => setIsEditorActive(false)}
         onFocus={() => setIsEditorActive(true)}
+        showCharCount={isEditorActive}
       />
       <Typography
         className="text-xs text-muted-foreground brightness-75 bg-inherit absolute top-1 right-0 bottom-0"
