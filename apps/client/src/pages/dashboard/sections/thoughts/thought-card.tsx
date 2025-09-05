@@ -18,7 +18,7 @@ export const ThoughtCard = ({ thought }: ThoughtCardProps) => {
       <Tiptap
         className={`text-muted-foreground group-hover:text-foreground block pr-5 max-w-full whitespace-normal overflow-hidden group-hover:max-h-screen transition-all duration-200 ${
           isEditorActive
-            ? "max-h-screen text-foreground border-l border-primary p-4"
+            ? "max-h-screen text-foreground border-l border-accent-foreground p-4 text-lg"
             : "max-h-6"
         }`}
         content={thought.text}

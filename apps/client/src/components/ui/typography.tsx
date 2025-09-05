@@ -3,7 +3,7 @@ import * as React from "react";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
-const typographyVariants = cva("", {
+const typographyVariants = cva("font-sans", {
   variants: {
     variant: {
       h1: "scroll-m-20 text-4xl font-extrabold tracking-wide lg:text-5xl",

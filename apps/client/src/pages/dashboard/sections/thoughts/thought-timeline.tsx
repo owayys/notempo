@@ -1,6 +1,6 @@
 import { ThoughtType } from "@domain/thought/thought.schema";
 import { ChevronsUpDown } from "lucide-react";
-import { Box, HStack, Separator, VStack } from "@/components/ui";
+import { Box, HStack, Separator, Typography, VStack } from "@/components/ui";
 import {
   Collapsible,
   CollapsibleContent,
@@ -56,9 +56,9 @@ export const ThoughtTimeline = ({ thoughts }: ThoughtTimelineProps) => {
       {months.slice(1).map((m) => (
         <Collapsible className="w-full" key={m}>
           <CollapsibleTrigger asChild>
-            <HStack className="w-full items-center my-2 text-primary hover:text-accent-foreground cursor-pointer transition-all duration-200">
-              {m}
-              <Separator className="flex flex-1 ml-2 mr-1.5" />
+            <HStack className="w-full items-center my-4 text-primary group hover:text-accent-foreground cursor-pointer transition-all duration-200">
+              <Typography>{m}</Typography>
+              <Separator className="flex flex-1 ml-2 mr-1.5 bg-primary group-hover:bg-accent-foreground transition-all duration-200" />
               <ChevronsUpDown className="size-4 translate-x-0.5" />
             </HStack>
           </CollapsibleTrigger>
