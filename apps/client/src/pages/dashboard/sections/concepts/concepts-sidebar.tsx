@@ -1,7 +1,12 @@
+"use client";
+
 import { ConceptType } from "@domain/concept/concept.schema";
 import { ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { LogoutButton } from "@/components/auth/logout-button";
+import { CollapseAll } from "@/components/concept/collapse-all";
 import { NewThought } from "@/components/thought/new-thought";
-import { Box, Button, Separator, Typography } from "@/components/ui";
+import { Box, Button, HStack, Separator, Typography } from "@/components/ui";
 import {
   Collapsible,
   CollapsibleContent,
@@ -11,6 +16,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -26,10 +32,29 @@ interface ConceptsSidebarProps {
 }
 
 export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
+  const [openItems, setOpenItems] = useState<Set<string>>(new Set());
+
+  const toggleItem = (id: string, open: boolean) => {
+    setOpenItems((prev) => {
+      const next = new Set(prev);
+      if (open) {
+        next.add(id);
+      } else {
+        next.delete(id);
+      }
+      return next;
+    });
+  };
+
+  const collapseAll = () => setOpenItems(new Set());
+
   return (
     <Sidebar className="flex flex-col h-full">
       <SidebarHeader className="flex-shrink-0">
-        <NewThought />
+        <HStack className="w-full justify-center">
+          <NewThought />
+          <CollapseAll onClick={collapseAll} />
+        </HStack>
       </SidebarHeader>
       <Separator className="flex-shrink-0" />
       <ScrollArea className="flex-1 w-full overflow-hidden">
@@ -38,19 +63,21 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
             <Collapsible
               className="group/collapsible w-full"
               key={c.id}
+              onOpenChange={(open) => toggleItem(c.id, open)}
+              open={openItems.has(c.id)}
               title={c.label}
             >
               <SidebarGroup className="p-0 w-full">
                 <SidebarGroupLabel
                   asChild
-                  className="group/label max-w-68 md:max-w-60 overflow-hidden mx-auto text-primary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm w-full"
+                  className="group/label max-w-72 md:max-w-64 overflow-hidden mx-auto text-primary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm w-full"
                 >
                   <CollapsibleTrigger asChild>
                     <Button
-                      className="justify-start p-0 w-full min-w-0"
+                      className="justify-start p-0 w-full min-w-0 hover:bg-transparent"
                       variant="ghost"
                     >
-                      <ChevronRight className="transition-transform group-data-[state=open]/collapsible:rotate-90 flex-shrink-0" />
+                      <ChevronRight className="text-accent-foreground transition-transform group-data-[state=open]/collapsible:rotate-90 flex-shrink-0" />
                       <Typography
                         className="block w-full text-start min-w-0"
                         style={{
@@ -61,7 +88,6 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
                           backgroundClip: "text",
                         }}
                         title={c.label}
-                        variant="muted"
                       >
                         {c.label}
                       </Typography>
@@ -70,17 +96,17 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
                 </SidebarGroupLabel>
                 <CollapsibleContent>
                   <SidebarGroupContent>
-                    <SidebarMenu>
+                    <SidebarMenu className="gap-0">
                       {thoughts.map((t) => (
                         <SidebarMenuItem key={t.id}>
                           <SidebarMenuButton
                             asChild
                             className="w-full max-w-70 md:max-w-62 group/thought hover:bg-transparent cursor-pointer active:bg-transparent"
                           >
-                            <Box className="w-full min-w-0 pl-12">
-                              <Box className="absolute left-7 top-0 bottom-0 w-px h-2/3 my-auto bg-muted-foreground opacity-50 group-hover/thought:bg-accent-foreground group-hover/thought:w-0.5 transition-all duration-100" />
+                            <Box className="w-full min-w-0 pl-10 h-8">
+                              <Box className="absolute left-4.75 top-0 bottom-0 w-px h-full my-auto bg-accent-foreground opacity-50 group-hover/thought:bg-accent-foreground group-hover/thought:w-0.5 group-hover/thought:opacity-75 group-hover/thought:rounded transition-all duration-100" />
                               <Typography
-                                className="truncate block w-full group-hover/thought:text-primary transition-all duration-100 min-w-0 bg-gradient-to-r from-current to-transparent bg-clip-text"
+                                className="truncate block w-full text-primary group-hover/thought:text-accent-foreground transition-all duration-100 min-w-0 bg-gradient-to-r from-current to-transparent bg-clip-text"
                                 style={{
                                   background:
                                     "linear-gradient(to right, currentColor 90%, transparent 100%)",
@@ -89,7 +115,6 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
                                   backgroundClip: "text",
                                 }}
                                 title={t.text}
-                                variant="muted"
                               >
                                 {t.text}
                               </Typography>
@@ -105,6 +130,11 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
           ))}
         </SidebarContent>
       </ScrollArea>
+      <SidebarFooter>
+        <HStack>
+          <LogoutButton />
+        </HStack>
+      </SidebarFooter>
     </Sidebar>
   );
 };
