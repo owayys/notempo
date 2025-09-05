@@ -79,7 +79,7 @@ export const ConceptsSidebar = ({ concepts }: ConceptsSidebarProps) => {
                     >
                       <ChevronRight className="text-accent-foreground transition-transform group-data-[state=open]/collapsible:rotate-90 flex-shrink-0" />
                       <Typography
-                        className="block w-full text-start min-w-0"
+                        className="block w-full text-start min-w-0 text-base"
                         style={{
                           background:
                             "linear-gradient(to right, currentColor 90%, transparent 100%)",
