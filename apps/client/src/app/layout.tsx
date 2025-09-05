@@ -1,5 +1,10 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import { Toaster } from "sonner";
+import {
+  Atkinson_Hyperlegible_Next,
+  Geist,
+  JetBrains_Mono,
+  Noto_Serif,
+} from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { QueryProvider } from "@/providers/query.provider";
 import { seo } from "@/shared/seo";
@@ -9,8 +14,18 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const hyperLegible = Atkinson_Hyperlegible_Next({
+  variable: "--font-atkinson-serif",
+  subsets: ["latin"],
+});
+
+const notoSerif = Noto_Serif({
+  variable: "--font-noto-serif",
+  subsets: ["latin"],
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
@@ -28,10 +43,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex w-screen h-screen justify-center items-center`}
+        className={`${geistSans.variable} ${hyperLegible.variable} ${notoSerif.variable} ${jetBrainsMono.variable} antialiased flex w-screen h-screen justify-center items-center`}
       >
         <QueryProvider>{children}</QueryProvider>
-        <Toaster position="top-right" richColors />
+        <Toaster position="bottom-right" richColors />
       </body>
     </html>
   );
