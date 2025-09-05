@@ -11,7 +11,7 @@ import {
 import z from "zod";
 
 export const ThoughtSchema = defineEntitySchema("ThoughtId", {
-  text: z.string().describe("The content of the thought"),
+  text: z.string().max(512).describe("The content of the thought"),
   authorId: UserSchema.id,
 });
 
