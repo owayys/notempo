@@ -6,11 +6,15 @@ import type {
   GetConceptData,
   GetConceptDetailsData,
 } from "@domain/concept/concept.schema";
+import { ThoughtRepository } from "@domain/thought/thought.repo";
 import { autoInjectable } from "tsyringe";
 
 @autoInjectable()
 export class ConceptWorkflows {
-  constructor(private readonly conceptRepository: ConceptRepository) {}
+  constructor(
+    private readonly conceptRepository: ConceptRepository,
+    private readonly thoughtRepository: ThoughtRepository,
+  ) {}
 
   async createConcept(params: CreateConceptData) {
     const concept = ConceptEntity.create(params);
@@ -23,6 +27,7 @@ export class ConceptWorkflows {
       { ...params.filters, authorId: params.authorId },
       params.pagination,
     );
+
     return AppResult.fromResult(concepts);
   }
 
@@ -31,6 +36,16 @@ export class ConceptWorkflows {
       params.id,
       params.authorId,
     );
-    return AppResult.fromResult(concept);
+
+    const conceptWithThoughts = await concept
+      .flatZip((concept) => this.thoughtRepository.findByConceptId(concept.id))
+      .toPromise();
+
+    return AppResult.fromResult(
+      conceptWithThoughts.map(([c, t]) => ({
+        concept: c,
+        thoughts: t,
+      })),
+    );
   }
 }
