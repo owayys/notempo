@@ -1,6 +1,6 @@
 "use client";
 
-import { ThoughtType } from "@domain/thought/thought.schema";
+import type { ThoughtType } from "@domain/thought/thought.entity";
 import { useState } from "react";
 import { HStack, Typography } from "@/components/ui";
 import Tiptap from "@/components/ui/tiptap";
@@ -14,9 +14,9 @@ export const ThoughtCard = ({ thought }: ThoughtCardProps) => {
   const [isEditorActive, setIsEditorActive] = useState(false);
 
   return (
-    <HStack className="w-full relative max-w-full overflow-hidden group transition-all duration-300">
+    <HStack className="w-full relative max-w-full group transition-all duration-300">
       <Tiptap
-        className={`text-muted-foreground group-hover:text-foreground block pr-5 max-w-full whitespace-normal overflow-hidden group-hover:max-h-screen transition-all duration-300 ${
+        className={`text-muted-foreground group-hover:text-foreground block pr-5 w-full max-w-full overflow-hidden break-words group-hover:max-h-screen transition-all duration-300 ${
           isEditorActive
             ? "max-h-screen text-foreground border-l border-accent-foreground p-4 text-lg"
             : "max-h-6"

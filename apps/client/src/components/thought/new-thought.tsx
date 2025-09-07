@@ -42,8 +42,8 @@ export const NewThought = () => {
     <Dialog onOpenChange={setOpen} open={open}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="link">
-            <SquarePen />
+          <Button className="p-0" variant="link">
+            <SquarePen className="min-h-5 min-w-5" />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-1/2">

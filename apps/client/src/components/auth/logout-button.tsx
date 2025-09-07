@@ -32,7 +32,7 @@ export const LogoutButton = () => {
 
   return (
     <Button onClick={onClick} variant="link">
-      <LogOut className="rotate-180" />
+      <LogOut className="rotate-180 min-h-5 min-w-5" />
     </Button>
   );
 };

@@ -5,7 +5,7 @@ export const ThoughtEditor = () => {
     <Tiptap
       autofocus
       className="min-h-40 text-lg w-full h-full overflow-hidden"
-      placeholder="Thinking..."
+      placeholder="Type something..."
       showCharCount
     />
   );
