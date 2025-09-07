@@ -1,3 +1,4 @@
+import type { ConceptType } from "@domain/concept/concept.entity";
 import Link from "next/link";
 import {
   Breadcrumb,
@@ -8,18 +9,22 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-export const ConceptCrumbs = () => {
+interface ConceptCrumbsProps {
+  concept?: ConceptType;
+}
+
+export const ConceptCrumbs = ({ concept }: ConceptCrumbsProps) => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/">Concepts</Link>
+            <Link href="/dashboard">Nexus</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator>/</BreadcrumbSeparator>
+        {concept && <BreadcrumbSeparator>/</BreadcrumbSeparator>}
         <BreadcrumbItem>
-          <BreadcrumbPage>Some Concept</BreadcrumbPage>
+          <BreadcrumbPage>{concept?.label}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

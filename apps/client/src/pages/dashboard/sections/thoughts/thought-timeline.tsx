@@ -1,4 +1,4 @@
-import { ThoughtType } from "@domain/thought/thought.schema";
+import type { ThoughtType } from "@domain/thought/thought.entity";
 import { ChevronsUpDown } from "lucide-react";
 import { Box, HStack, Separator, Typography, VStack } from "@/components/ui";
 import {
@@ -10,7 +10,7 @@ import { getMonthPretty } from "@/shared/utils/format-date";
 import { ThoughtCard } from "./thought-card";
 
 interface ThoughtTimelineProps {
-  thoughts: ThoughtType[];
+  thoughts?: ThoughtType[];
 }
 
 const groupThoughtsByMonth = (
@@ -31,7 +31,7 @@ const groupThoughtsByMonth = (
     }, {} as Record<string, ThoughtType[]>);
 };
 
-const RenderThoughts = ({ thoughts }: ThoughtTimelineProps) => {
+const RenderThoughts = ({ thoughts = [] }: ThoughtTimelineProps) => {
   return (
     <>
       {thoughts.map((t, i) => (
@@ -46,12 +46,12 @@ const RenderThoughts = ({ thoughts }: ThoughtTimelineProps) => {
   );
 };
 
-export const ThoughtTimeline = ({ thoughts }: ThoughtTimelineProps) => {
+export const ThoughtTimeline = ({ thoughts = [] }: ThoughtTimelineProps) => {
   const groupedThoughts = groupThoughtsByMonth(thoughts);
   const months = Object.keys(groupedThoughts);
 
   return (
-    <VStack className="w-full">
+    <VStack className="h-full w-full items-center justify-start">
       <RenderThoughts thoughts={groupedThoughts[months[0]]} />
       {months.slice(1).map((m) => (
         <Collapsible className="w-full" key={m}>
