@@ -2,12 +2,11 @@ import { type ClientContext, createORPCClient } from "@orpc/client";
 import { RPCLink, type RPCLinkOptions } from "@orpc/client/fetch";
 import { createORPCReactQueryUtils, type RouterUtils } from "@orpc/react-query";
 import type { AppRouterClient } from "@repo/contract/contracts";
-import { headers } from "next/headers";
 
 export type ContractClient = AppRouterClient;
 
 const baseRpcLinkOpts: RPCLinkOptions<ClientContext> = {
-  url: `${import.meta.env.VITE_SERVER_URL}/rpc`,
+  url: `${process.env.NEXT_PUBLIC_SERVER_URL}/rpc`,
 };
 
 const getClientLink = () => {
@@ -24,7 +23,10 @@ const getClientLink = () => {
   } else {
     return new RPCLink({
       ...baseRpcLinkOpts,
-      headers: async () => Object.fromEntries(await headers()),
+      headers: async () => {
+        const { headers } = await import("next/headers");
+        return Object.fromEntries(await headers());
+      },
       fetch(request, init) {
         return globalThis.fetch(request, { ...init, credentials: "include" });
       },
