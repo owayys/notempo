@@ -1,4 +1,6 @@
 import { Result as R } from "@carbonteq/fp";
+import type { ConceptType } from "@domain/concept/concept.entity";
+import type { ThoughtType } from "@domain/thought/thought.entity";
 import { ThoughtEntity } from "@domain/thought/thought.entity";
 import {
   ThoughtNotFoundError,
@@ -8,7 +10,6 @@ import {
   type ThoughtFindFilters,
   ThoughtRepository,
 } from "@domain/thought/thought.repo";
-import type { ThoughtType } from "@domain/thought/thought.schema";
 import {
   type Paginated,
   type PaginationParams,
@@ -17,8 +18,8 @@ import {
   type RepoUnitResult,
 } from "@domain/utils";
 import { type AppDatabase, injectDb } from "@infra/db/client";
-import { thoughts } from "@infra/db/models";
-import { and, asc, desc, eq, ilike } from "drizzle-orm";
+import { links, thoughts } from "@infra/db/models";
+import { and, asc, desc, eq, ilike, sql } from "drizzle-orm";
 import { injectable } from "tsyringe";
 import { enhanceEntityMapper } from "../utils/repo.utils";
 
@@ -76,6 +77,18 @@ export class DrizzleThoughtRepository extends ThoughtRepository {
     } catch {
       return R.Err(new ThoughtNotFoundError(id));
     }
+  }
+
+  override async findByConceptId(
+    conceptId: ConceptType["id"],
+  ): Promise<RepoResult<ThoughtEntity[], ThoughtNotFoundError>> {
+    const rows = await this.db
+      .select()
+      .from(thoughts)
+      .innerJoin(links, sql`${links.thoughtId} = ${thoughts.id}`)
+      .where(eq(links.conceptId, conceptId));
+
+    return mapper.mapMany(rows.map((r) => r.thoughts));
   }
 
   override async findWithFilters(
