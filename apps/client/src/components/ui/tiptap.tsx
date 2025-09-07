@@ -2,7 +2,7 @@
 import { CharacterCount, Placeholder } from "@tiptap/extensions";
 import {
   EditorContent,
-  EditorOptions,
+  type EditorOptions,
   useEditor,
   useEditorState,
 } from "@tiptap/react";
@@ -10,7 +10,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { Box } from "@/components/ui/layout";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
-import { SmartBraces } from "@/shared/utils/tiptap-extensions";
+import { SmartBraces } from "@/shared/tiptap-extensions";
 
 interface EditorProps {
   content?: EditorOptions["content"];
@@ -69,15 +69,15 @@ const Tiptap = ({
   return (
     <Box className={cn("h-full relative", className)}>
       <EditorContent
-        className="h-full [&_.ProseMirror]:h-full [&_.ProseMirror]:min-h-full"
+        className="font-atkinson h-full [&_.ProseMirror]:h-full [&_.ProseMirror]:min-h-full"
         editor={editor}
         onBlur={onBlur}
         onFocus={onFocus}
       />
       <Typography
         className={`${
-          !showCharCount && "hidden"
-        } absolute -bottom-3 right-0 transition-all duration-200 pointer-events-none px-3 py-2 ${
+          showCharCount ? "opacity-100" : "opacity-0"
+        } absolute -bottom-3 right-0 transition-all duration-250 pointer-events-none px-3 py-2 ${
           remainingChars < 50
             ? "text-destructive text-base"
             : remainingChars < 100
