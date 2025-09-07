@@ -22,7 +22,7 @@ export const addRpcHandler = (app: Elysia, container: DependencyContainer) => {
       const authCtx = await createAuthContext(c, container);
 
       const { response } = await rpcHandler.handle(c.request, {
-        prefix: "/api",
+        prefix: "/rpc",
         context: { auth: authCtx },
       });
 
