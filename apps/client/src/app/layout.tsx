@@ -1,22 +1,24 @@
 import {
-  Atkinson_Hyperlegible_Next,
+  Atkinson_Hyperlegible,
   Geist,
   JetBrains_Mono,
   Noto_Serif,
 } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
-import "./globals.css";
 import { QueryProvider } from "@/providers/query.provider";
 import { seo } from "@/shared/seo";
+// @ts-expect-error
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const hyperLegible = Atkinson_Hyperlegible_Next({
+const hyperLegible = Atkinson_Hyperlegible({
   variable: "--font-atkinson-serif",
   subsets: ["latin"],
+  weight: "400",
 });
 
 const notoSerif = Noto_Serif({
