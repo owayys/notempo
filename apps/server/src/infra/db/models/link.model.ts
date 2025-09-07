@@ -1,4 +1,4 @@
-import type { LinkType } from "@domain/link/link.schema";
+import type { LinkType } from "@domain/link/link.entity";
 import { relations } from "drizzle-orm";
 import { pgTable, uuid } from "drizzle-orm/pg-core";
 import { getBaseColumns } from "../utils/model.utils";

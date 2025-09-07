@@ -1,4 +1,4 @@
-import type { ThoughtType } from "@domain/thought/thought.schema";
+import type { ThoughtType } from "@domain/thought/thought.entity";
 import { relations } from "drizzle-orm";
 import { pgTable, uuid, varchar } from "drizzle-orm/pg-core";
 import { getBaseColumns } from "../utils/model.utils";

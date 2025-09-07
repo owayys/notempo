@@ -1,22 +1,11 @@
-import { UserSchema } from "@domain/user/user.schema";
+import { ThoughtSchema } from "@domain/thought/thought.entity";
 import {
-  defineEntitySchema,
   PaginatedResultSchema,
-  removeBaseFields,
   type WithUser,
   withPaginationParams,
 } from "@domain/utils";
 import z from "zod";
-
-export const ConceptSchema = defineEntitySchema("ConceptId", {
-  label: z.string().describe("The label of the concept"),
-  authorId: UserSchema.id,
-});
-export type ConceptType = z.infer<typeof ConceptSchema>;
-export type ConceptEncoded = z.input<typeof ConceptSchema>;
-
-export const ConceptCreateData = removeBaseFields(ConceptSchema);
-export type ConceptCreateData = z.infer<typeof ConceptCreateData>;
+import { ConceptCreateData, ConceptSchema } from "./concept.entity";
 
 export const CreateConceptParams = ConceptCreateData.omit({ authorId: true });
 export type CreateConceptParams = z.infer<typeof CreateConceptParams>;
@@ -40,7 +29,10 @@ export const GetConceptDetailsParams = z.object({
 export type GetConceptDetailsParams = z.infer<typeof GetConceptDetailsParams>;
 export type GetConceptDetailsData = WithUser<GetConceptDetailsParams>;
 
-export const GetConceptDetailsResponse = ConceptSchema;
+export const GetConceptDetailsResponse = z.object({
+  concept: ConceptSchema,
+  thoughts: ThoughtSchema.array(),
+});
 export type GetConceptDetailsResponse = z.infer<
   typeof GetConceptDetailsResponse
 >;

@@ -1,11 +1,11 @@
 import { Result as R } from "@carbonteq/fp";
+import type { LinkType } from "@domain/link/link.entity";
 import { LinkEntity } from "@domain/link/link.entity";
 import {
   LinkNotFoundError,
   LinkValidationError,
 } from "@domain/link/link.errors";
 import { LinkRepository } from "@domain/link/link.repo";
-import type { LinkType } from "@domain/link/link.schema";
 import {
   type Paginated,
   type PaginationParams,

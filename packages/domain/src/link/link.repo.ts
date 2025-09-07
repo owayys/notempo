@@ -1,6 +1,5 @@
-import type { LinkEntity } from "@domain/link/link.entity";
+import type { LinkEntity, LinkType } from "@domain/link/link.entity";
 import { LinkNotFoundError } from "@domain/link/link.errors";
-import type { LinkType } from "@domain/link/link.schema";
 import type {
   Paginated,
   PaginationParams,

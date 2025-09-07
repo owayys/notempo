@@ -1,6 +1,9 @@
-import type { ThoughtEntity } from "@domain/thought/thought.entity";
+import type { ConceptType } from "@domain/concept/concept.entity";
+import type {
+  ThoughtEntity,
+  ThoughtType,
+} from "@domain/thought/thought.entity";
 import { ThoughtNotFoundError } from "@domain/thought/thought.errors";
-import type { ThoughtType } from "@domain/thought/thought.schema";
 import type {
   Paginated,
   PaginationParams,
@@ -19,6 +22,9 @@ export abstract class ThoughtRepository {
     id: ThoughtType["id"],
     authorId: ThoughtType["authorId"],
   ): Promise<RepoResult<ThoughtEntity, ThoughtNotFoundError>>;
+  abstract findByConceptId(
+    conceptId: ConceptType["id"],
+  ): Promise<RepoResult<ThoughtEntity[], ThoughtNotFoundError>>;
   abstract findWithFilters(
     filters: ThoughtFindFilters,
     paginationParams: PaginationParams,

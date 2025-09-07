@@ -1,5 +1,5 @@
 import { Result } from "@carbonteq/fp";
-import type { UserType } from "@domain/user/user.schema";
+import type { UserType } from "@domain/user/user.entity";
 import { type ValidationError } from "@domain/utils/base.errors";
 import { zodErrorToValidationError } from "@domain/utils/validation.utils";
 import z from "zod";

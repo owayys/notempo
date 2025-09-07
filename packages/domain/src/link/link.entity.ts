@@ -1,11 +1,26 @@
-import type { ConceptType } from "@domain/concept/concept.schema";
+import type { ConceptType } from "@domain/concept/concept.entity";
+import { ConceptSchema } from "@domain/concept/concept.entity";
+import type { ThoughtType } from "@domain/thought/thought.entity";
+import { ThoughtSchema } from "@domain/thought/thought.entity";
 import {
-  type LinkCreateData,
-  LinkSchema,
-  type LinkType,
-} from "@domain/link/link.schema";
-import type { ThoughtType } from "@domain/thought/thought.schema";
-import { BaseEntity, createValidator } from "@domain/utils";
+  BaseEntity,
+  createValidator,
+  defineEntitySchema,
+  removeBaseFields,
+} from "@domain/utils";
+import z from "zod";
+
+export const LinkSchema = defineEntitySchema("LinkId", {
+  thoughtId: ThoughtSchema.id,
+  conceptId: ConceptSchema.id,
+  alias: z.string().optional().describe("An optional alias for the link"),
+});
+
+export type LinkType = z.infer<typeof LinkSchema>;
+export type LinkEncoded = z.input<typeof LinkSchema>;
+
+export const LinkCreateData = removeBaseFields(LinkSchema);
+export type LinkCreateData = z.infer<typeof LinkCreateData>;
 
 const validate = createValidator(LinkSchema);
 

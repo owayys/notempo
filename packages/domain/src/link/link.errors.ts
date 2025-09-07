@@ -1,15 +1,12 @@
 import { NotFoundError, ValidationError } from "@domain/utils/base.errors";
-import type { LinkType } from "./link.schema";
+import type { LinkType } from "./link.entity";
 
 type LinkId = LinkType["id"];
 
 export class LinkNotFoundError extends NotFoundError {
   override readonly code = "LINK_NOT_FOUND" as const;
 
-  constructor(
-    readonly listId: LinkId,
-    context?: Record<string, unknown>,
-  ) {
+  constructor(readonly listId: LinkId, context?: Record<string, unknown>) {
     super("Link", listId, context);
   }
 }

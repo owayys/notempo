@@ -1,6 +1,8 @@
-import type { ConceptEntity } from "@domain/concept/concept.entity";
+import type {
+  ConceptEntity,
+  ConceptType,
+} from "@domain/concept/concept.entity";
 import { ConceptNotFoundError } from "@domain/concept/concept.errors";
-import type { ConceptType } from "@domain/concept/concept.schema";
 import type {
   Paginated,
   PaginationParams,

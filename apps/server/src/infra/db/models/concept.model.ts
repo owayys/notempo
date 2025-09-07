@@ -1,4 +1,4 @@
-import type { ConceptType } from "@domain/concept/concept.schema";
+import type { ConceptType } from "@domain/concept/concept.entity";
 import { relations } from "drizzle-orm";
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 import { getBaseColumns } from "../utils/model.utils";

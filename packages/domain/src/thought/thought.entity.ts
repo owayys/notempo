@@ -1,9 +1,22 @@
+import { UserSchema } from "@domain/user/user.entity";
 import {
-  type ThoughtCreateData,
-  ThoughtSchema,
-  type ThoughtType,
-} from "@domain/thought/thought.schema";
-import { BaseEntity, createValidator } from "@domain/utils";
+  BaseEntity,
+  createValidator,
+  defineEntitySchema,
+  removeBaseFields,
+} from "@domain/utils";
+import z from "zod";
+
+export const ThoughtSchema = defineEntitySchema("ThoughtId", {
+  text: z.string().max(512).describe("The content of the thought"),
+  authorId: UserSchema.id,
+});
+
+export type ThoughtType = z.infer<typeof ThoughtSchema>;
+export type ThoughtEncoded = z.input<typeof ThoughtSchema>;
+
+export const ThoughtCreateData = removeBaseFields(ThoughtSchema);
+export type ThoughtCreateData = z.infer<typeof ThoughtCreateData>;
 
 const validate = createValidator(ThoughtSchema);
 

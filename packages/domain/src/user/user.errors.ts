@@ -1,5 +1,5 @@
 import { NotFoundError, ValidationError } from "@domain/utils/base.errors";
-import type { UserType } from "./user.schema";
+import type { UserType } from "./user.entity";
 
 // User not found error
 export class UserNotFoundError extends NotFoundError {

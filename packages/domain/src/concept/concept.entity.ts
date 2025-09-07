@@ -1,10 +1,17 @@
-import {
-  ConceptCreateData,
-  ConceptSchema,
-  type ConceptType,
-} from "@domain/concept/concept.schema";
-import { createValidator } from "@domain/utils";
-import { BaseEntity } from "@domain/utils/base.entity";
+import { UserSchema } from "@domain/user/user.entity";
+import { createValidator, removeBaseFields } from "@domain/utils";
+import { BaseEntity, defineEntitySchema } from "@domain/utils/base.entity";
+import z from "zod";
+
+export const ConceptSchema = defineEntitySchema("ConceptId", {
+  label: z.string().describe("The label of the concept"),
+  authorId: UserSchema.id,
+});
+export type ConceptType = z.infer<typeof ConceptSchema>;
+export type ConceptEncoded = z.input<typeof ConceptSchema>;
+
+export const ConceptCreateData = removeBaseFields(ConceptSchema);
+export type ConceptCreateData = z.infer<typeof ConceptCreateData>;
 
 const validate = createValidator(ConceptSchema);
 

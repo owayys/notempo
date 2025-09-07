@@ -1,4 +1,4 @@
-import { UserCreateData } from "@domain/user/user.schema";
+import { UserCreateData } from "@domain/user/user.entity";
 import { config } from "@infra/config";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
