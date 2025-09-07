@@ -1,4 +1,5 @@
 import { Result as R } from "@carbonteq/fp";
+import type { ConceptType } from "@domain/concept/concept.entity";
 import { ConceptEntity } from "@domain/concept/concept.entity";
 import {
   ConceptNotFoundError,
@@ -8,7 +9,6 @@ import {
   type ConceptFindFilters,
   ConceptRepository,
 } from "@domain/concept/concept.repo";
-import type { ConceptType } from "@domain/concept/concept.schema";
 import {
   type Paginated,
   type PaginationParams,
@@ -101,7 +101,10 @@ export class DrizzleConceptRepository extends ConceptRepository {
         ? asc(concepts.updatedAt)
         : desc(concepts.updatedAt);
 
-    const conditions = [ilike(concepts.label, `%${filters.label ?? ""}%`)];
+    const conditions = [
+      eq(concepts.authorId, filters.authorId),
+      ilike(concepts.label, `%${filters.label ?? ""}%`),
+    ];
 
     const where = and(...conditions);
 
