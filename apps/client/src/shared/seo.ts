@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 type SeoArgs = {
   title: string;
@@ -21,14 +21,6 @@ export const seo = ({
       type: "website",
       title,
       description,
-      images: image ? [image] : undefined,
-    },
-    twitter: {
-      card: image ? "summary_large_image" : "summary",
-      title,
-      description,
-      creator: "@tannerlinsley",
-      site: "@tannerlinsley",
       images: image ? [image] : undefined,
     },
   };
