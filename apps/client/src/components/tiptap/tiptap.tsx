@@ -7,10 +7,10 @@ import {
   useEditorState,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { SmartBraces } from "@/components/tiptap/tiptap-extensions";
 import { Box } from "@/components/ui/layout";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
-import { SmartBraces } from "@/shared/tiptap-extensions";
 
 interface EditorProps {
   content?: EditorOptions["content"];

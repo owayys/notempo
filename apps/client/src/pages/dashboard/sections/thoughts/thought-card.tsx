@@ -2,8 +2,8 @@
 
 import type { ThoughtType } from "@domain/thought/thought.entity";
 import { useState } from "react";
+import Tiptap from "@/components/tiptap/tiptap";
 import { HStack, Typography } from "@/components/ui";
-import Tiptap from "@/components/ui/tiptap";
 import { getRelativeTime } from "@/shared/utils/format-date";
 
 interface ThoughtCardProps {
