@@ -2,6 +2,7 @@
 
 import { SquarePen } from "lucide-react";
 import { useEffect, useState } from "react";
+import Tiptap from "@/components/tiptap/tiptap";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,7 +14,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ThoughtEditor } from "./thought-editor";
 
 export const NewThought = () => {
   const [open, setOpen] = useState(false);
@@ -51,7 +51,12 @@ export const NewThought = () => {
             <DialogTitle>Yo</DialogTitle>
             <DialogDescription>What u think</DialogDescription>
           </DialogHeader>
-          <ThoughtEditor />
+          <Tiptap
+            autofocus
+            className="min-h-40 text-lg w-full h-full overflow-hidden"
+            placeholder="Type something..."
+            showCharCount
+          />
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
