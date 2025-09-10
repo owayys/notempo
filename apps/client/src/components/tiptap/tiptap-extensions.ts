@@ -1,3 +1,4 @@
+import Mention from "@tiptap/extension-mention";
 import { TextSelection } from "@tiptap/pm/state";
 import { Extension } from "@tiptap/react";
 
@@ -59,5 +60,11 @@ export const SmartBraces = Extension.create({
     };
 
     return shortcuts;
+  },
+});
+
+export const MentionConcept = Mention.configure({
+  HTMLAttributes: {
+    class: "px-1 py-0.5 rounded bg-muted text-primary",
   },
 });
