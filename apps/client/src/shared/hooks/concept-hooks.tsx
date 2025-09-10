@@ -21,8 +21,20 @@ const conceptDetailsQueryOptions = (id: string) => {
   });
 };
 
+const createConceptQueryOptions = (label: string) => {
+  return orpc.authenticated.concept.createConcept.queryOptions({
+    retry: 2,
+    input: {
+      label,
+    },
+  });
+};
+
 export const useConcepts = (search?: string) =>
   useQuery(conceptsQueryOptions(search));
 
 export const useConceptDetails = (id: string) =>
   useQuery(conceptDetailsQueryOptions(id));
+
+export const useCreateConcept = (label: string) =>
+  useQuery(createConceptQueryOptions(label));
