@@ -1,5 +1,4 @@
 "use client";
-import Mention from "@tiptap/extension-mention";
 import { CharacterCount, Placeholder } from "@tiptap/extensions";
 import {
   EditorContent,
@@ -9,19 +8,19 @@ import {
   useEditorState,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useState } from "react";
-import { SmartBraces } from "@/components/tiptap/tiptap-extensions";
+import { type KeyboardEvent, useState } from "react";
 import {
-  Command,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+  MentionConcept,
+  SmartBraces,
+} from "@/components/tiptap/tiptap-extensions";
 import { Box } from "@/components/ui/layout";
-import { Popover, PopoverContent } from "@/components/ui/popover";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
+import {
+  createConceptMutation,
+  useConcepts,
+} from "@/shared/hooks/concept-hooks";
+import { type Item, MentionInput } from "./mention-input";
 
 interface EditorProps {
   content?: EditorOptions["content"];
@@ -35,12 +34,6 @@ interface EditorProps {
 
 const CHARACTER_LIMIT = 512;
 
-const mockItems = [
-  { id: "1", label: "John Doe", value: "john" },
-  { id: "2", label: "Jane Smith", value: "jane" },
-  { id: "3", label: "Bob Johnson", value: "bob johnson" },
-];
-
 const Tiptap = ({
   content,
   className,
@@ -50,19 +43,17 @@ const Tiptap = ({
   onBlur,
   showCharCount = false,
 }: EditorProps) => {
-  const [suggestionItems, setSuggestionItems] = useState<
-    {
-      id: string;
-      label: string;
-      value: string;
-      range: Range;
-    }[]
-  >([]);
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState<{
     top: number;
     left: number;
   } | null>(null);
+
+  const [conceptsQuery, setConceptsQuery] = useState<string>("");
+
+  const { data: concepts = [], isLoading } = useConcepts(conceptsQuery, 5);
+
+  const [currentRange, setCurrentRange] = useState<Range | number>(0);
 
   const editor = useEditor({
     extensions: [
@@ -73,23 +64,25 @@ const Tiptap = ({
         mode: "textSize",
       }),
       SmartBraces,
-      Mention.configure({
-        HTMLAttributes: {
-          class: "px-1 py-0.5 rounded bg-muted text-primary",
-        },
+      MentionConcept.configure({
         suggestion: {
-          items: ({ query }) =>
-            mockItems
-              .filter((item) =>
-                item.label.toLowerCase().includes(query.toLowerCase()),
-              )
-              .slice(0, 5),
+          char: "#",
+          items: () => {
+            if (isLoading) {
+              return [{ id: "loading", label: "Loading...", value: "loading" }];
+            }
+
+            return concepts.map((c) => ({
+              id: c.id,
+              label: c.label,
+              value: c.label,
+            }));
+          },
           render: () => {
             return {
               onStart: (props) => {
-                setSuggestionItems(
-                  props.items.map((it) => ({ ...it, range: props.range })),
-                );
+                setCurrentRange(props.range);
+
                 setOpen(props.items.length > 0);
                 const rect = props.clientRect?.();
                 if (rect) {
@@ -100,9 +93,8 @@ const Tiptap = ({
                 }
               },
               onUpdate: (props) => {
-                setSuggestionItems(
-                  props.items.map((it) => ({ ...it, range: props.range })),
-                );
+                setCurrentRange(props.range);
+
                 setOpen(props.items.length > 0);
                 const rect = props.clientRect?.();
                 if (rect) {
@@ -121,7 +113,7 @@ const Tiptap = ({
               },
               onExit: () => {
                 setOpen(false);
-                setSuggestionItems([]);
+                setCurrentRange(0);
                 setPosition(null);
               },
             };
@@ -149,6 +141,35 @@ const Tiptap = ({
 
   const remainingChars = CHARACTER_LIMIT - (editorState?.charCount ?? 0);
 
+  const createConceptMut = createConceptMutation();
+
+  const handleSelectConcept = (concept: Item) => {
+    editor?.commands.insertContentAt(currentRange, [
+      {
+        type: "mention",
+        attrs: { id: concept.id, label: concept.label },
+      },
+      { type: "text", text: " " },
+    ]);
+    editor?.commands.focus("end");
+    setOpen(false);
+  };
+
+  const handleCreateConcept = async (label: string) => {
+    const res = await createConceptMut.mutateAsync({ label });
+    handleSelectConcept(res);
+  };
+
+  const onInput = (event: KeyboardEvent) => {
+    if (event.key === "Backspace") {
+      const input = event.currentTarget as HTMLInputElement;
+      if (!input.value) {
+        editor?.commands.focus("end");
+        setOpen(false);
+      }
+    }
+  };
+
   return (
     <Box className={cn("h-full relative", className)}>
       <EditorContent
@@ -172,57 +193,19 @@ const Tiptap = ({
         {remainingChars}
       </Typography>
 
-      {/* Popover for mentions */}
-      <Popover onOpenChange={setOpen} open={open}>
-        <PopoverContent
-          align="start"
-          className="w-56 p-0"
-          side="bottom"
-          style={{
-            position: "absolute",
-            top: position?.top,
-            left: position?.left,
-          }}
-        >
-          <Command>
-            <CommandInput
-              onKeyDown={(event) => {
-                if (event.key === "Backspace") {
-                  const input = event.currentTarget as HTMLInputElement;
-                  if (!input.value) {
-                    editor?.commands.focus("end");
-                    setOpen(false);
-                  }
-                }
-              }}
-              placeholder="Search user..."
-            />
-            <CommandList>
-              <CommandGroup>
-                {suggestionItems.map((item) => (
-                  <CommandItem
-                    key={item.id}
-                    onSelect={() => {
-                      editor?.commands.insertContentAt(item.range, [
-                        {
-                          type: "mention",
-                          attrs: { id: item.id, label: item.label },
-                        },
-                        { type: "text", text: " " },
-                      ]);
-                      editor?.commands.focus("end");
-                      setOpen(false);
-                    }}
-                    value={item.value}
-                  >
-                    {item.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
+      <MentionInput
+        createItem={handleCreateConcept}
+        creationPending={createConceptMut.isPending}
+        inputHook={onInput}
+        items={concepts}
+        open={open}
+        position={position}
+        query={conceptsQuery}
+        queryLoading={isLoading}
+        selectItem={handleSelectConcept}
+        setOpen={setOpen}
+        setQuery={setConceptsQuery}
+      />
     </Box>
   );
 };
