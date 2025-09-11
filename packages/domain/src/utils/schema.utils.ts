@@ -8,16 +8,25 @@ export type WithUser<T, K extends string = "authorId"> = T & {
   [P in K]: UserType["id"];
 };
 
-export const createValidator = <T>(schema: z.ZodSchema<T>) => {
-  return (data: unknown): Result<T, ValidationError> => {
-    const result = schema.safeParse(data);
-    if (result.success) {
-      return Result.Ok(result.data);
-    } else {
-      return Result.Err(zodErrorToValidationError(result.error));
-    }
-  };
-};
+const encodeDecodeOpts: z.core.ParseContext<z.core.$ZodIssue> = {
+  reportInput: true,
+} as const;
+
+export const parseResToResult = <T>(
+  parseRes: z.ZodSafeParseResult<T>,
+): Result<T, ValidationError> =>
+  parseRes.success
+    ? Result.Ok(parseRes.data)
+    : Result.Err(zodErrorToValidationError(parseRes.error));
+
+export const createCodec = <TOut, TIn>(
+  schema: z.ZodSchema<TOut, TIn>,
+) => ({
+  serialize: (value: TOut): Result<TIn, ValidationError> =>
+    parseResToResult(schema.safeEncode(value, encodeDecodeOpts)),
+  deserialize: (value: TIn): Result<TOut, ValidationError> =>
+    parseResToResult(schema.safeDecode(value, encodeDecodeOpts)),
+});
 
 export type ExtendedSchema<T, Methods extends Record<string, unknown>> = T &
   Methods;
