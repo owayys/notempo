@@ -1,10 +1,9 @@
-import type { ConceptType } from "@domain/concept/concept.entity";
 import { ConceptSchema } from "@domain/concept/concept.entity";
-import type { ThoughtType } from "@domain/thought/thought.entity";
 import { ThoughtSchema } from "@domain/thought/thought.entity";
 import {
   BaseEntity,
-  createValidator,
+  C,
+  createCodec,
   defineEntitySchema,
   removeBaseFields,
 } from "@domain/utils";
@@ -13,7 +12,7 @@ import z from "zod";
 export const LinkSchema = defineEntitySchema("LinkId", {
   thoughtId: ThoughtSchema.id,
   conceptId: ConceptSchema.id,
-  alias: z.string().optional().describe("An optional alias for the link"),
+  alias: C.opt(z.string()).describe("An optional alias for the link"),
 });
 
 export type LinkType = z.infer<typeof LinkSchema>;
@@ -22,19 +21,20 @@ export type LinkEncoded = z.input<typeof LinkSchema>;
 export const LinkCreateData = removeBaseFields(LinkSchema);
 export type LinkCreateData = z.infer<typeof LinkCreateData>;
 
-const validate = createValidator(LinkSchema);
+const codec = createCodec(LinkSchema);
 
 export class LinkEntity extends BaseEntity implements LinkType {
   override id: LinkType["id"];
-  conceptId: ConceptType["id"];
-  thoughtId: ThoughtType["id"];
-  alias: string | undefined;
+  conceptId: LinkType["conceptId"];
+  thoughtId: LinkType["thoughtId"];
+  alias: LinkType["alias"];
 
   private constructor(data: LinkType) {
     super(data);
     this.id = data.id;
     this.conceptId = data.conceptId;
     this.thoughtId = data.thoughtId;
+    this.alias = data.alias;
   }
 
   static create(data: LinkCreateData) {
@@ -46,11 +46,11 @@ export class LinkEntity extends BaseEntity implements LinkType {
     return new LinkEntity(linkData);
   }
 
-  static fromEncoded(data: LinkType) {
-    return validate(data).map((d) => new LinkEntity(d));
+  static fromEncoded(encoded: LinkEncoded) {
+    return codec.deserialize(encoded).map((d) => new LinkEntity(d));
   }
 
   serialize() {
-    return validate(this);
+    return codec.serialize(this);
   }
 }

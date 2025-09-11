@@ -1,6 +1,7 @@
 import { Result as R } from "@carbonteq/fp";
 import {
-  createValidator,
+  C,
+  createCodec,
   defineEntitySchema,
   removeBaseFields,
 } from "@domain/utils";
@@ -13,7 +14,7 @@ export const UserSchema = defineEntitySchema("UserId", {
   emailVerified: z
     .boolean()
     .describe("The email verification status of the user"),
-  image: z.url().optional().describe("The profile image of the user"),
+  image: C.opt(C.stringToURL).describe("The profile image of the user"),
 });
 export type UserType = z.infer<typeof UserSchema>;
 export type UserEncoded = z.input<typeof UserSchema>;
@@ -26,7 +27,7 @@ export type UserCreateData = z.infer<typeof UserCreateData>;
 export const UserUpdateData = UserCreateData.partial();
 export type UserUpdateData = z.infer<typeof UserUpdateData>;
 
-const validate = createValidator(UserSchema);
+const codec = createCodec(UserSchema);
 
 export class UserEntity extends BaseEntity implements UserType {
   override id: UserType["id"];
@@ -54,11 +55,11 @@ export class UserEntity extends BaseEntity implements UserType {
     return R.Ok(new UserEntity(userData));
   }
 
-  static fromEncoded(data: UserEncoded) {
-    return validate(data).map((d) => new UserEntity(d));
+  static fromEncoded(encoded: UserEncoded) {
+    return codec.deserialize(encoded).map((d) => new UserEntity(d));
   }
 
   serialize() {
-    return validate(this);
+    return codec.serialize(this);
   }
 }

@@ -1,7 +1,7 @@
 import { UserSchema } from "@domain/user/user.entity";
 import {
   BaseEntity,
-  createValidator,
+  createCodec,
   defineEntitySchema,
   removeBaseFields,
 } from "@domain/utils";
@@ -18,7 +18,7 @@ export type ThoughtEncoded = z.input<typeof ThoughtSchema>;
 export const ThoughtCreateData = removeBaseFields(ThoughtSchema);
 export type ThoughtCreateData = z.infer<typeof ThoughtCreateData>;
 
-const validate = createValidator(ThoughtSchema);
+const codec = createCodec(ThoughtSchema);
 
 export class ThoughtEntity extends BaseEntity implements ThoughtType {
   override id: ThoughtType["id"];
@@ -41,11 +41,11 @@ export class ThoughtEntity extends BaseEntity implements ThoughtType {
     return new ThoughtEntity(thoughtData);
   }
 
-  static fromEncoded(data: ThoughtType) {
-    return validate(data).map((d) => new ThoughtEntity(d));
+  static fromEncoded(encoded: ThoughtEncoded) {
+    return codec.deserialize(encoded).map((d) => new ThoughtEntity(d));
   }
 
   serialize() {
-    return validate(this);
+    return codec.serialize(this);
   }
 }

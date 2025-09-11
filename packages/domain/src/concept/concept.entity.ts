@@ -1,7 +1,7 @@
 import { UserSchema } from "@domain/user/user.entity";
-import { createValidator, removeBaseFields } from "@domain/utils";
+import { createCodec, removeBaseFields } from "@domain/utils";
 import { BaseEntity, defineEntitySchema } from "@domain/utils/base.entity";
-import z from "zod";
+import z from "zod/v4";
 
 export const ConceptSchema = defineEntitySchema("ConceptId", {
   label: z.string().describe("The label of the concept"),
@@ -13,7 +13,7 @@ export type ConceptEncoded = z.input<typeof ConceptSchema>;
 export const ConceptCreateData = removeBaseFields(ConceptSchema);
 export type ConceptCreateData = z.infer<typeof ConceptCreateData>;
 
-const validate = createValidator(ConceptSchema);
+const codec = createCodec(ConceptSchema);
 
 export class ConceptEntity extends BaseEntity implements ConceptType {
   override id: ConceptType["id"];
@@ -36,11 +36,11 @@ export class ConceptEntity extends BaseEntity implements ConceptType {
     return new ConceptEntity(conceptData);
   }
 
-  static fromEncoded(data: ConceptType) {
-    return validate(data).map((d) => new ConceptEntity(d));
+  static fromEncoded(encoded: ConceptEncoded) {
+    return codec.deserialize(encoded).map((d) => new ConceptEntity(d));
   }
 
   serialize() {
-    return validate(this);
+    return codec.serialize(this);
   }
 }
