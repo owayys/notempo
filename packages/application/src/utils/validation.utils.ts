@@ -1,5 +1,5 @@
 import type { Result } from "@carbonteq/fp";
-import { createValidator } from "@domain/utils";
+import { parseResToResult } from "@domain/utils";
 import type { ValidationError } from "@domain/utils/base.errors";
 import type { StandardSchemaV1 } from "@standard-schema/spec";
 import z from "zod";
@@ -37,7 +37,7 @@ export const simpleSchemaDto = <Name extends string, A, I>(
     static create(
       input: unknown,
     ): Result<TSimpleDto<Name, SimpleDto>, ValidationError> {
-      return createValidator(schema)(input).map(
+      return parseResToResult(schema.safeParse(input)).map(
         // biome-ignore lint/complexity/noThisInStatic: Intentional factory
         (validatedData) => new this(validatedData, RuntimeValidationToken),
       );
@@ -72,7 +72,7 @@ export const dtoStandardSchema = <T, Out, In>(
             ({
               message: issue.message,
               path: issue.path,
-            }) satisfies StandardSchemaV1.Issue,
+            } satisfies StandardSchemaV1.Issue),
         );
 
         return { issues } satisfies StandardSchemaV1.FailureResult;
