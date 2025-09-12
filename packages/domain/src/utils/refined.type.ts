@@ -102,10 +102,10 @@ export const C = {
     decode: (encodedString) => decodeURIComponent(encodedString),
     encode: (decodedString) => encodeURIComponent(decodedString),
   }),
-  opt: <T>(schema: z.ZodType<T>) =>
+  opt: <TOut, TIn>(schema: z.ZodType<TOut, TIn>) =>
     z.codec(
       z.union([schema, z.null()]),
-      z.custom<Option<T>>((val) => val instanceof Option, {
+      z.custom<Option<TOut>>((val) => val instanceof Option, {
         message: "Expected Option instance",
       }),
       {
