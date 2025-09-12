@@ -28,7 +28,7 @@ export class AuthService {
 
     const user = UserEntity.fromEncoded({
       ...session.user,
-      image: session.user.image || undefined,
+      image: session.user.image || null,
     });
 
     return user;
