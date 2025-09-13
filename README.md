@@ -1,6 +1,7 @@
 # notempo
 
-> ⚠️ **Under Active Development** - This project is currently in early development and not yet in a usable state.
+> [!NOTE]
+> In its current state, this project only serves as a playground for me to experiment with different knowledge managament techniques and ergonomics. I may refine it into a usable tool if any experimental path yields results.
 
 To install dependencies:
 ```bash
