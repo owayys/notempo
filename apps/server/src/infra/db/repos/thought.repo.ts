@@ -11,6 +11,7 @@ import {
   ThoughtRepository,
 } from "@domain/thought/thought.repo";
 import {
+  FpUtils,
   type Paginated,
   type PaginationParams,
   PaginationUtils,
@@ -42,13 +43,16 @@ export class DrizzleThoughtRepository extends ThoughtRepository {
   override async create(
     thought: ThoughtEntity,
   ): Promise<RepoResult<ThoughtEntity>> {
-    const encoded = thought.serialize();
+    const encoded = FpUtils.serializedPreserveId(thought);
 
     return await encoded
       .flatMap(async (thoughtData) => {
         const [inserted] = await this.db
           .insert(thoughts)
-          .values(thoughtData)
+          .values({
+            ...thoughtData,
+            authorId: thought.authorId,
+          })
           .returning();
 
         if (!inserted) {
@@ -148,12 +152,13 @@ export class DrizzleThoughtRepository extends ThoughtRepository {
   override async update(
     thought: ThoughtEntity,
   ): Promise<RepoResult<ThoughtEntity, ThoughtNotFoundError>> {
-    const encoded = thought.serialize();
+    const encoded = FpUtils.serializedPreserveId(thought);
 
     return await encoded
       .flatMap(async (thoughtData) => {
         const updateData = {
           ...thoughtData,
+          authorId: thought.authorId,
           updatedAt: new Date(),
         };
 

@@ -7,6 +7,7 @@ import {
 } from "@domain/link/link.errors";
 import { LinkRepository } from "@domain/link/link.repo";
 import {
+  FpUtils,
   type Paginated,
   type PaginationParams,
   PaginationUtils,
@@ -26,7 +27,7 @@ const mapper = enhanceEntityMapper((row: typeof links.$inferSelect) =>
     updatedAt: row.updatedAt,
     thoughtId: row.thoughtId,
     conceptId: row.conceptId,
-    alias: row.alias ?? undefined,
+    alias: row.alias,
   }),
 );
 
@@ -36,7 +37,7 @@ export class DrizzleLinkRepository extends LinkRepository {
     super();
   }
   override async create(link: LinkEntity): Promise<RepoResult<LinkEntity>> {
-    const encoded = link.serialize();
+    const encoded = FpUtils.serializedPreserveId(link);
 
     return await encoded
       .flatMap(async (linkData) => {
@@ -129,7 +130,7 @@ export class DrizzleLinkRepository extends LinkRepository {
   override async update(
     link: LinkEntity,
   ): Promise<RepoResult<LinkEntity, LinkNotFoundError>> {
-    const encoded = link.serialize();
+    const encoded = FpUtils.serializedPreserveId(link);
 
     return await encoded
       .flatMap(async (linkData) => {

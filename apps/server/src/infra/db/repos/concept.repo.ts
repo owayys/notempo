@@ -10,6 +10,7 @@ import {
   ConceptRepository,
 } from "@domain/concept/concept.repo";
 import {
+  FpUtils,
   type Paginated,
   type PaginationParams,
   PaginationUtils,
@@ -40,13 +41,16 @@ export class DrizzleConceptRepository extends ConceptRepository {
   override async create(
     concept: ConceptEntity,
   ): Promise<RepoResult<ConceptEntity>> {
-    const encoded = concept.serialize();
+    const encoded = FpUtils.serializedPreserveId(concept);
 
     return await encoded
       .flatMap(async (conceptData) => {
         const [inserted] = await this.db
           .insert(concepts)
-          .values(conceptData)
+          .values({
+            ...conceptData,
+            authorId: concept.authorId,
+          })
           .returning();
 
         if (!inserted) {
@@ -133,12 +137,13 @@ export class DrizzleConceptRepository extends ConceptRepository {
   override async update(
     concept: ConceptEntity,
   ): Promise<RepoResult<ConceptEntity, ConceptNotFoundError>> {
-    const encoded = concept.serialize();
+    const encoded = FpUtils.serializedPreserveId(concept);
 
     return await encoded
       .flatMap(async (conceptData) => {
         const updateData = {
           ...conceptData,
+          authorId: concept.authorId,
           updatedAt: new Date(),
         };
 
