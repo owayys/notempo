@@ -4,6 +4,16 @@ import type { ValidationError } from "@domain/utils/base.errors";
 import type { StandardSchemaV1 } from "@standard-schema/spec";
 import z from "zod";
 
+export const validateWithZod = <Out, In>(
+  schema: z.ZodSchema<Out, In>,
+  data: unknown,
+) =>
+  parseResToResult(
+    z.safeDecode(schema, data as In, {
+      reportInput: true,
+    }),
+  );
+
 type DtoSchemaInput<T, Out, In> = {
   schema: z.ZodSchema<Out, In>;
   create: (data: unknown) => Result<T, ValidationError>;
@@ -37,7 +47,7 @@ export const simpleSchemaDto = <Name extends string, A, I>(
     static create(
       input: unknown,
     ): Result<TSimpleDto<Name, SimpleDto>, ValidationError> {
-      return parseResToResult(schema.safeParse(input)).map(
+      return validateWithZod(schema, input).map(
         // biome-ignore lint/complexity/noThisInStatic: Intentional factory
         (validatedData) => new this(validatedData, RuntimeValidationToken),
       );
