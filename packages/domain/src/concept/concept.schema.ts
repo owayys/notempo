@@ -5,9 +5,9 @@ import {
   withPaginationParams,
 } from "@domain/utils";
 import z from "zod";
-import { ConceptCreateData, ConceptSchema } from "./concept.entity";
+import { ConceptCreateSchema, ConceptSchema } from "./concept.entity";
 
-export const CreateConceptParams = ConceptCreateData.omit({ authorId: true });
+export const CreateConceptParams = ConceptCreateSchema.omit({ authorId: true });
 export type CreateConceptParams = z.infer<typeof CreateConceptParams>;
 export type CreateConceptData = WithUser<CreateConceptParams>;
 

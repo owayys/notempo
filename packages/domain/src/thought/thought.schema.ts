@@ -6,9 +6,9 @@ import {
   withPaginationParams,
 } from "@domain/utils";
 import z from "zod";
-import { ThoughtCreateData, ThoughtSchema } from "./thought.entity";
+import { ThoughtCreateSchema, ThoughtSchema } from "./thought.entity";
 
-export const CreateThoughtParams = ThoughtCreateData.extend({
+export const CreateThoughtParams = ThoughtCreateSchema.extend({
   concepts: ConceptSchema.id.array(),
 }).omit({ authorId: true });
 export type CreateThoughtParams = z.infer<typeof CreateThoughtParams>;

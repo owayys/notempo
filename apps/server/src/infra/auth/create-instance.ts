@@ -1,4 +1,4 @@
-import { UserCreateData } from "@domain/user/user.entity";
+import { UserCreateSchema } from "@domain/user/user.entity";
 import { config } from "@infra/config";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
@@ -10,7 +10,7 @@ import type { AppDatabase } from "../db/client";
 
 const beforeHooks = createAuthMiddleware(async (ctx) => {
   if (ctx.path === "/sign-up/email") {
-    const validationResult = UserCreateData.safeParse(ctx.body);
+    const validationResult = UserCreateSchema.safeParse(ctx.body);
 
     if (!validationResult.success) {
       throw new APIError("UNPROCESSABLE_ENTITY", {

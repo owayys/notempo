@@ -10,8 +10,8 @@ export const ConceptSchema = defineEntitySchema("ConceptId", {
 export type ConceptType = z.infer<typeof ConceptSchema>;
 export type ConceptEncoded = z.input<typeof ConceptSchema>;
 
-export const ConceptCreateData = removeBaseFields(ConceptSchema);
-export type ConceptCreateData = z.infer<typeof ConceptCreateData>;
+export const ConceptCreateSchema = removeBaseFields(ConceptSchema);
+export type ConceptCreateData = z.infer<typeof ConceptCreateSchema>;
 
 const codec = createCodec(ConceptSchema);
 

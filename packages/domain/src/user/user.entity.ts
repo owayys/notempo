@@ -19,13 +19,13 @@ export const UserSchema = defineEntitySchema("UserId", {
 export type UserType = z.infer<typeof UserSchema>;
 export type UserEncoded = z.input<typeof UserSchema>;
 
-export const UserCreateData = removeBaseFields(UserSchema).omit({
+export const UserCreateSchema = removeBaseFields(UserSchema).omit({
   emailVerified: true,
 });
-export type UserCreateData = z.infer<typeof UserCreateData>;
+export type UserCreateData = z.infer<typeof UserCreateSchema>;
 
-export const UserUpdateData = UserCreateData.partial();
-export type UserUpdateData = z.infer<typeof UserUpdateData>;
+export const UserUpdateSchema = UserCreateSchema.partial();
+export type UserUpdateData = z.infer<typeof UserUpdateSchema>;
 
 const codec = createCodec(UserSchema);
 

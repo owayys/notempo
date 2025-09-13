@@ -18,8 +18,8 @@ export const LinkSchema = defineEntitySchema("LinkId", {
 export type LinkType = z.infer<typeof LinkSchema>;
 export type LinkEncoded = z.input<typeof LinkSchema>;
 
-export const LinkCreateData = removeBaseFields(LinkSchema);
-export type LinkCreateData = z.infer<typeof LinkCreateData>;
+export const LinkCreateSchema = removeBaseFields(LinkSchema);
+export type LinkCreateData = z.infer<typeof LinkCreateSchema>;
 
 const codec = createCodec(LinkSchema);
 
