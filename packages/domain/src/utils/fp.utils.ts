@@ -1,6 +1,16 @@
 import { Result } from "@carbonteq/fp/result";
 import type { ValidationError } from "@domain/utils/base.errors";
 import { validationErrorsToSingle } from "@domain/utils/validation.utils";
+import type { Paginated } from "./pagination.utils";
+
+type WithSerialize<T> = {
+  serialize: () => T;
+};
+
+type WithSerializeAndId<T, Id> = {
+  id: Id;
+  serialize: () => Result<T, ValidationError>;
+};
 
 function collectValidationErrors<T>(
   results: Result<Promise<T>, ValidationError>[],
@@ -13,6 +23,26 @@ function collectValidationErrors<T>(results: Result<T, ValidationError>[]) {
 }
 
 export const FpUtils = {
+  serialized: <T>(obj: WithSerialize<T>): T => obj.serialize(),
+  serializedPreserveId: <T, Id>(
+    obj: WithSerializeAndId<T, Id>,
+  ): Result<Omit<T, "id"> & { id: Id }, ValidationError> =>
+    obj.serialize().map((data) => ({ ...data, id: obj.id })),
+  paginatedSerialize: <T>(
+    r: Paginated<WithSerialize<Result<T, ValidationError>>>,
+  ) => {
+    const serializedItems = r.items.map((item) => item.serialize());
+    const rolledValidationErrors = collectValidationErrors(serializedItems);
+
+    return rolledValidationErrors.map(
+      (items) =>
+        ({
+          ...r,
+          items,
+        } satisfies Paginated<T>),
+    );
+  },
+
   pick:
     <T extends Record<string, unknown>, K extends (keyof T)[]>(...keys: K) =>
     (obj: T) => {
