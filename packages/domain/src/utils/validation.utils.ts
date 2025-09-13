@@ -51,7 +51,9 @@ export const getIssuesFromZodError = (error: z.ZodError): ValidationIssue[] => {
   return error.issues.flatMap((issue) => getIssuesFromZodIssue(issue));
 };
 
-export const getIssuesFromZodIssue = (issue: z.ZodIssue): ValidationIssue[] => {
+export const getIssuesFromZodIssue = (
+  issue: z.core.$ZodIssue,
+): ValidationIssue[] => {
   const path = issue.path;
   const field = pathToFieldName(path.map(String));
 
