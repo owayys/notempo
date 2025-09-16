@@ -1,7 +1,7 @@
 "use client";
 
-import { DashboardPage } from "@/pages/dashboard/dashboard-page";
 import { useConcepts } from "@/shared/hooks/concept-hooks";
+import { DashboardPage } from "@/views/dashboard/dashboard-page";
 
 interface DashboardContainerProps {
   selectedConceptId?: string;

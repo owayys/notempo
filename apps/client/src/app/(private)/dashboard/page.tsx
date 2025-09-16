@@ -1,4 +1,4 @@
-import { DashboardContainer } from "@/pages/dashboard/dashboard-container";
+import { DashboardContainer } from "@/views/dashboard/dashboard-container";
 
 const Dashboard = () => {
   return <DashboardContainer />;

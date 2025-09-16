@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { RegisterPage } from "@/pages/auth/register-page";
+import { RegisterPage } from "@/views/auth/register-page";
 
 const Register = () => {
   const router = useRouter();

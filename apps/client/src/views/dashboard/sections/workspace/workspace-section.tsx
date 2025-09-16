@@ -3,7 +3,7 @@ import type { ThoughtType } from "@domain/thought/thought.entity";
 import { ConceptMeta } from "@/components/concept/concept-meta";
 import { Typography, VStack } from "@/components/ui";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ThoughtTimeline } from "@/pages/dashboard/sections/thoughts/thought-timeline";
+import { ThoughtTimeline } from "@/views/dashboard/sections/thoughts/thought-timeline";
 
 interface WorkspaceSectionProps {
   concept?: ConceptType;
