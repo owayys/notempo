@@ -6,10 +6,9 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from "@/components/ui/command";
 import { Popover, PopoverContent } from "@/components/ui/popover";
-import { HStack, Separator } from "../ui";
+import { Separator } from "../ui";
 
 export type Item = {
   id: string;
