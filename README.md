@@ -1,7 +1,7 @@
 # notempo
-
+Experimenting with knowledge management techniques and zodv4 codec.
 > [!NOTE]
-> In its current state, this project only serves as a playground for me to experiment with different knowledge managament techniques and ergonomics. I may refine it into a usable tool, but the findings from this will more likely be used for an [Obsidian](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://obsidian.md/&ved=2ahUKEwjayeSVxfSPAxXIk68BHTDdA-QQFnoECBoQAQ&usg=AOvVaw1ILZ6Ax3NYhgLRKojFB5pV) plugin. 
+> This may become usable someday, but the findings from this will more likely be used for an [Obsidian](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://obsidian.md/&ved=2ahUKEwjayeSVxfSPAxXIk68BHTDdA-QQFnoECBoQAQ&usg=AOvVaw1ILZ6Ax3NYhgLRKojFB5pV) plugin. 
 
 To install dependencies:
 ```bash
